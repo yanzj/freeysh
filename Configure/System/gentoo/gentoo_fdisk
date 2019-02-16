@@ -1,0 +1,119 @@
+X86=============================
+
+### fdisk
+===================
+
+fdisk -l
+fdisk /dev/sda
+
+Command (m for help): m
+
+
+   Device Boot    Start       End    Blocks   Id  System
+/dev/sda1   *         1        14    105808+  83  Linux
+/dev/sda2            15        81    506520   82  Linux swap
+/dev/sda3            82      3876  28690200   83  Linux
+
+
+mkfs.ext2 /dev/sda1
+mkswap /dev/sda2 && swapon /dev/sda2
+mkfs.ext4/dev/sda3
+
+mount /dev/sda3 /mnt/gentoo
+mkdir /mnt/gentoo/boot
+mount /dev/sda1 /mnt/gentoo/boot
+
+cd /mnt/gentoo
+date 113020352018
+
+portage3 install
+================================
+
+links://www.gentoo.org.downloads/
+
+tar xvjpf 
+
+
+
+cd /
+mount -t proc proc /mnt/gentoo/proc
+mount --rbind /dev /mnt/gentoo/dev
+mount --rbind /sys /mnt/gentoo/sys
+cp -L /etc/resolv.conf /mnt/gentoo/etc/
+chroot /mnt/gentoo /bin/bash
+env-update
+source /etc/profile
+export PS1="(chroot) $PS1"
+
+ls /usr/share/zoneinfo
+cp /usr/share/zoneinfo/America/NewYork /etc/localtime
+
+eselect profile list
+eselect profile set 3
+
+cd /etc
+vi /etc/conf.d/hostname
+hostname="gentoo"
+
+vim /etc/hosts
+# IPv4 and IPv6 localhost aliases
+127.0.0.1	localhost gentoo
+
+
+linux kernel install
+===============================
+
+cd /etc
+emerge gentoo-sources
+emerge genkernel
+genkernel all
+
+vim /et/fstab
+
+/dev/sda1	/boot	ext2	noauto,noatime	1	2
+/dev/sda2	none1	swap	sw		0	0
+/dev/sda3	/	ext4	noatime		0	1
+
+
+ifconfig
+cd init.d
+ln -s net.lo net.enp0s3
+cd ../conf.d
+echo 'config_enp0s3="192.168.1.10 netmask 255.255.255.0 brd 192.168.1.255"' >>net
+echo 'routes_enp0s3="default via 192.168.1.1"' >>net
+echo 'hostname="gentoo"' >>hsotname
+
+rc-update add net.enp0s3 default
+
+passwd
+
+emerge syslog-ng vixie-cron
+rc-update add syslog-ng default
+rc-update add vixie-cron default
+emerge dhcpcd
+
+cd
+cd /boot
+ls
+cd /
+emerge sys-boot/grub:2
+grub2-install --no-floppy /dev/sda
+grub2-mkconfig -o /boot/grub/grub.cfg
+exit
+
+umount -l /mnt/gentoo/dev
+umount -l /mnt/gentoo/sys
+umount -l /mnt/gentoo/proc
+umount -l /mnt/gentoo/boot
+umount -l /mnt/gentoo
+reboot
+
+
+useradd -m -G users,wheel,audio,cdrom,usb,video,portage,cron -s /bin/bash ysh
+
+
+
+
+
+
+

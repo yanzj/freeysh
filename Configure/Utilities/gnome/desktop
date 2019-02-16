@@ -1,0 +1,142 @@
+### ===========================================================================
+Activities 活动
+===============================================================================
+
+
+GNOME 文件系统列表 =============================
+	最近使用的 Rencett	
+	Home		
+	视频	Videos			
+	图片	Pictures		
+	文档	Documents
+	下载	Downloads
+	音乐	Music
+	回收站	trash
+	其它位置	Other Locations
+	模板	Templates
+	桌面	Desktop
+	公共	Public
+	名称	Name
+	大小	Size
+	已修改	Modified
+	项目	items
+	主题	theme
+
+	文件夹是空的　Folder is Empty
+
+
+
+GNOME 系统设定 =============================
+全部设置	All Settings
+
+	个人	Personal
+
+		区域和语言	Region & Language
+		在线账号		Online Accounts
+		搜索		Search
+		背景		Background
+		通知		Notifications
+		隐私		Privacy	
+
+
+	硬件	Hardware
+
+		声音		Sound
+		打印机		Printers
+		显示		Displays
+		电源		Power
+		网络		Network
+		色彩		Color
+		蓝牙		Buletooth
+		键盘		Keyboard
+		鼠标和触摸板	Mouse & Touchpad
+		Ｗacom 手写板	Wacom Tablet
+
+	系统	System
+
+		共享		Sharing
+		日期和时间	Date & Time
+		用户		Users
+		详细信息		Details
+		通用辅助功能	Universal Access
+
+===============================================
+		电源	Power
+电池	Battery
+	剩余　１时　３９分	１　hour 39 minutes remaining
+
+节电	Power Saving
+
+	屏幕亮度		Screen brightness
+	无操作时使屏幕变暗 Dim screen when inactive
+	空白屏幕		Blank screen
+	WI-FI
+	关闭　Wi-Fi 以节省电源	Turn off Wi-fi to save power
+
+挂起和关机按钮	Suspend & Power Button
+	自动挂起	Automatic suspend
+	按下电源按钮时	When the Power Button is pressed
+==========================================================
+
+鼠标和触摸板Mouse & Touchpad	测试你的设置Test Your Settings
+
+常规	General
+
+	主按钮	Primary Button
+	Sets the order of physical buttons on mice and
+			    touchpad 	Left	Right
+	设置鼠标和触控板上的物理按钮的排列　左　右
+
+触摸板	Touchpad
+	触摸板 Touchpad		ON
+
+	自动滚动 Natural Scrolling
+	Scrolling moves the content, not the view
+	滚动移动内容而非视图
+
+	触摸板速度	Touchpad Speed
+
+	轻拍以点击	Tap to Click
+	双指滚动		Two-finger Scrolling
+	边缘滚动		Edge Scrolling
+
+======================================================
+通用辅助功能	Universal Access
+
+始终显示通用辅助功能菜单 Always Show Univeral Access Menu
+
+视觉	Seeing
+
+	高对比度Hiht Contrast
+	大号文本Large Text
+	缩放	Zoom
+	屏幕朗读Screen Reader
+	发生键	Sound Keys
+
+听觉	Hearing
+	视觉警告	Visual Alerts
+
+打字	Typing
+
+	屏幕键盘	Screen keyboard
+	重复键		Repeat Keys
+	光标闪烁	Cursor Blinking
+	AceessX 打字助手Typing Assit（AccessX)
+
+指向和点击	Poniting & Clicking
+	鼠标键	Mouse Keys
+	点击助手Click Assit
+	双击延时Double-Click Delay
+
+通用辅助功能
+=============================
+高对比度	High Contrast
+缩放	Zoom
+大号文本	Large Text
+屏幕阅读器	Screen Reader
+屏幕键盘	Screen Keyboard
+视觉响铃	Visual Alerts
+粘滞(zhi)键	Sticky Keys
+慢速键		Slow Keys
+回键		Bounce Keys
+鼠标按键	Mouse Keys

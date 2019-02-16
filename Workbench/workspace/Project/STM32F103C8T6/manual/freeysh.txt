@@ -1,0 +1,128 @@
+
+###############################################################################
+gcc_arm_cross 交叉编译环境搭建，开发 stm32系列单片机
+
+1. 下载 [gcc-arm-none-eabi] gcc-arm-none-eabi-7-2018-q2-update-linux 软件包
+2. 解压软件包 tar -xvf gcc-arm-none-eabi-7-2018-q2-update-linux.tar.bz2
+3. 配置 gcc_arm_cross交叉编译器的环境变量
+	cd gcc-arm-none-eabi/bin
+	pwd
+	/home/ysh/gnu_arm_toolchain/gcc-arm-none-eabi/bin
+	echo PATH=$PATH:/home/ysh/opt/gcc-arm-none-eabi-7-2018-q2-update-linux \
+			/gcc-arm-none-eabi-7-2018-q2-update/bin >> $HOME/.bashrc
+			
+	source $HOME/.bashrc
+	arm-none-eabi-gcc --version
+
+###############################################################################
+下载 Eclipse　For C/C++
+
+1. 直接解压即可使用
+
+1. 安装　GNU ARM Eclipse Plug-ins 插件,开发单片机项目使用
+
+	Help-> Install New Software
+	▪ name: GNU ARM Eclipse Plug-ins
+	▪ URL:  http://gnuarmeclipse.sourceforge.net/updates
+	
+
+2. github上的单片机开发工具链
+	https://gnu-mcu-eclipse.github.io/
+	
+	
+###############################################################################
+eclipse下的STM32开发配置
+
+1. 新建一个空的 C 工程文件
+2. 在此工程文件中新建文件夹	
+	user		>>用户文件夹, main.c 
+	startup		>>工程启动代码文件夹, startup_stm32f10x_hd.S
+	cmsis		>>与Cortex-M内核相关的文件夹, system_stm32f10x.c
+	libraries	>>STM32库文件夹, inc, src
+	ldscripts	>>连接器存放文件夹, xxx.ld
+	bsp		>>用户自定义库文件夹, inc, src
+	manual		>>用户参考手册
+
+
+###############################################################################
+安装 Stlinkv2 >>并配置Eclipse烧写工具
+
+1. whereis st-flash 
+	/usr/bin/st-flash
+
+2. 配置 Stlinkv2烧写工具到 eclipse
+
+	▪ Run--->External Tools--->External Tools Configurations
+		Name: st-linkv2
+		Main:
+		Location:	>>st-flash 执行路径
+			/usr/bin/st-flash
+			
+		Working Directory:	{project_loc}/Release>>工作目录路径
+			${project_loc}/Release
+			
+		Arguments:		${project_name}>>要写入二进制文件的路径	
+			write ${project_name}.bin 0x8000000
+		
+		
+###############################################################################
+配置STM32调试工具基于Eclipse的开发环境
+
+1. sudo apt-get install openocd
+2. openocd -f interface/stlink-v2.cfg -f target/stm32f1x.cfg　>>单独的MCU调试接口
+3. openocd -f openocd -f board/st_nucleo_f4.cfg >>Nucleo开发板调试配置
+
+4. openocd 在Eclipse上的调试配置 >>>>>>>>>>>>GDB_Debugging>>>>>>>>>>>>>>>>>>>>>>>>
+◆　Run--->External Tools--->External Tools Configurations
+　　	Name: openocd
+　　	Main:
+　　	Location:	/usr/bin/openocd
+　　	Working Directory:
+　　	Arguments:	openocd -f interface/stlink-v2.cfg -f target/stm32f1x.cfg
+　　
+　　Run->Debug Configurations->GDB Hardware Debugging--->New lanuch configuration>>>>>>>>>>>>>>>>>>
+　　	Debugger
+　　		>>GDB Command:
+　　			>>$YSH/arm-none-eabi-gdb
+　　		>>Remote Target
+　　			>>use remote target
+　　			>>JTAG Device Generic TCP/IP
+　　			>>Host name or IP address: localhost
+　　			>>Port number               3333
+　　	Startup
+　　		Initialization Commands
+　　			monitor reset halt
+　　		
+　　		>>Common
+　　			Debug
+
+
+
+	Run->Debug Configurations->OpenOCD Debugging--->New lanuch configuration>>>>>>>>>>>>>>>>>>>
+
+	Debugger>>>>>
+	OpenOCD Setup
+	Start OpenOCD locally
+	Executable: ${openocd_path}/openocd
+	GDB port:    3333
+	Telnet port: 4444
+	Config options>>>>>>>>>>>>>>>
+openocd -f interface/stlink-v2.cfg -f target/stm32f1x.cfg
+	
+	Common>>>>>>>>>>
+	Shared file: ok
+	
+	配置路径openocd环境变量>>>>>>>>>>>>
+	openocd_path>>>
+	Window->Preferences->Run/Debug->String Substitution>>>>>
+		New String Substitution Variable>>>>
+		Name:	openocd_path
+		Value:	/usr/bin
+	
+
+
+
+
+
+
+

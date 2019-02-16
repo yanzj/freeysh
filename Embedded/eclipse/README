@@ -1,0 +1,100 @@
+### ===========================================================================
+stm32f10x_conf.h 头文件, 在 stm32f10x.h中的定义
+8296    #ifdef USE_STDPERIPH_DRIVER
+        #include "stm32f10x_conf.h"
+        #endif
+
+
+
+### ===========================================================================
+ctrl+ -         缩小字体
+ctrl+shift+ +   放大字体
+
+alt + F11       全屏切换
+ctrl+ M         编辑窗口最大化
+ctrl+ /         光标所在行，快速添加注释和取消注释
+Ctrl+ D         删除当前行
+Ctrl+Shift+X    把当前选中的文本全部变为小写
+Ctrl+Shift+Y    把当前选中的文本全部变为小写
+ 
+Ctrl+Q          定位到最后编辑的地方
+Ctrl+L          定位在某行 (对于程序超过100的人就有福音了)
+Ctrl+M          最大化当前的Edit或View (再按则反之)
+
+
+
+### ===========================================================================
+Ctrl + A        全选
+Ctrl + C        复制
+Ctrl + V        粘贴
+Ctrl + X        剪切
+Ctrl + D        删除光标所在行
+Ctrl + S        保存文件
+Ctrl + Z        撤销操作
+Ctrl + Y        恢复操作
+Tab             向右移动1个tab键
+Shift + Tab     向左移动1个tab键
+
+
+
+### ===========================================================================
+◆ 代码提示功能
+输入   "关键字 "
+然后按 "Alt + /"
+
+◆ 查找和替换
+
+⚫ Ctrl + F
+
+⚫ 选中关键字
+   在按 Ctrl + F
+
+⚫ 块注释
+	Ctrl + Shift + /	增加块注释
+	Ctrl + Shift + \	取消块注释
+⚫ 文档注释
+	"/**"	按回车
+
+
+
+### ===========================================================================
+1. 新建一个空的工程
+File->New->C Project->Emptry Project Cross ARM GCC
+
+2.touch user startup cmsis libraies ldscripts bsp		共创建6个文件夹
+
+3. 添加相应的文件到工程中，并刷新工程
+
+
+
+### ===========================================================================
+
+Project->Properties->C/C++ Build->Settings
+
+1.	Cross ARM C Compiler
+	Preprocessor:		
+		STM32F10X_HD
+		USE_STDPERIPH_DRIVER
+
+
+3.	Cross ARM C Compiler
+	includes		添加头文件
+
+4. 	Cross ARM C Linker	添加链接文件
+
+
+
+### ===========================================================================
+5.	启动文件后缀名改为大写[.S]
+
+6.	修改 core_cm3.c文件，针对STM32F10x_StdPeriph_Lib_V3.5.0库函数
+
+打开工程文件\STM32F10x_StdPeriph_Lib_V3.5.0\Libraries\CMSIS\CM3\CoreSupport下的core_cm3.c，找到
+ __ASM volatile ("strexb %0, %2, [%1]" : "=r" (result) : "r" (addr), "r" (value) );
+ __ASM volatile ("strexh %0, %2, [%1]" : "=r" (result) : "r" (addr), "r" (value) ); 两行，更改如下
+
+ __ASM volatile ("strexb %0, %2, [%1]" : "=&r" (result) : "r" (addr), "r" (value) );
+
+ __ASM volatile ("strexh %0, %2, [%1]" : "=&r" (result) : "r" (addr), "r" (value) );
+
+修改完成后，保存！注意，请再选中工程项目，刷新F5，再一次编译。刷新是很重要的。

@@ -1,0 +1,25 @@
+### ===========================================================================
+ctrl+c
+ctrl+d		exit
+ctrl+l		clear
+ctrl+a		move ^
+ctrl+e		move $
+ctrl+u		delete cursor ^
+ctrl+k		delete cursor $
+ctrl+r		history->keyword
+
+
+linux下我们如果想一个任务或者程序还后台执行可以使用&，
+实际上linux还提供了其他任务调度的命令。
+
+bg
+将一个在后台暂停的命令，变成继续执行
+
+fg
+将后台中的命令调至前台继续运行
+
+jobs
+查看当前有多少在后台运行的命令
+
+ctrl + z
+可以将一个正在前台执行的命令放到后台，并且暂停

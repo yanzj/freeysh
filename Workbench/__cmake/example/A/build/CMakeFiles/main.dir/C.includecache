@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/freeysh/Documents/ysh/Workbench/cmake/example/A/common.h
+stdio.h
+-
+select_sort.h
+/home/freeysh/Documents/ysh/Workbench/cmake/example/A/select_sort.h
+
+/home/freeysh/Documents/ysh/Workbench/cmake/example/A/main.c
+common.h
+/home/freeysh/Documents/ysh/Workbench/cmake/example/A/common.h
+
+/home/freeysh/Documents/ysh/Workbench/cmake/example/A/select_sort.c
+select_sort.h
+/home/freeysh/Documents/ysh/Workbench/cmake/example/A/select_sort.h
+
+/home/freeysh/Documents/ysh/Workbench/cmake/example/A/select_sort.h
+

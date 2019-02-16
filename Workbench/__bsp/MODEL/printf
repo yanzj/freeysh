@@ -1,0 +1,41 @@
+
+/**
+  ***************************************************************************** 
+  * 重定向这个C库(stdio)print函数 文件流---->>> 串口USART1 
+  * 1. ch送给USART1
+  * 2. 等待发送完毕
+  * 3. 返回ch
+  * 2018.10.29
+  * @freeysh
+  */
+int fputc(int ch, FILE *f)
+{
+
+	USART_SendData(USART1, ch);
+	while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
+	return(ch);
+}
+
+int main(void)
+{
+	printf("\n\twww.baidu.com");
+	printf("\n\t----------------");
+
+}
+
+
+
+
+
+
+
+
+###############################################################################
+
+printf 由屏幕重定向到串口(串口助手)
+
+stdio.lib 底层的库函数	
+
+	FILE, _sys_exit, _sys_open, int fputc(int ch, FILE *f)
+
+###############################################################################

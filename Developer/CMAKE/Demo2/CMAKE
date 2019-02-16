@@ -1,0 +1,42 @@
+### ===========================================================================
+# 多目录的构建，简单工程
+# 这个工程有子目录，但是只有一个CMakeLists.txt
+# 本工程的全部文件
+	b/CMakeLists.txe
+	b/src/sqrt.cpp
+	b/src/demo.cpp
+	b/include/sqrt.h
+
+
+cmake_minimum_required(VERSION 2.6)
+
+if(WIN32)
+	message(FATAL_ERROR "windows is stupid.")
+else(UNIX)
+	message(STATUS "This is Linux.")
+endif(WIN32)
+
+
+project(demoB)
+include_directories(./include)
+aux_source_derectory(./src CPP_FILES)
+
+message(STATUS "CPP_FILES" ${CPP_FILES})
+message(STATUS "Binary dir:" ${PROJECT_BINARY_DIR})
+message(STATUS "Source dir:" ${PROJECT_SOURCE_DIR})
+
+set(LIBRARIES /usr/bin/x86_64-linux-gnu/libm.so)
+add_executable(sqrtDemoB ${CPP_FILES})
+target_link_libraries(sqrtDemoB m)
+set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR/bin"})
+
+
+
+
+
+
+
+
+
+
+	

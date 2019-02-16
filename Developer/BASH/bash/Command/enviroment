@@ -1,0 +1,99 @@
+### ===========================================================================
+BASH命令的执行顺序:
+	1.以绝对路径或相对路径执行指令.
+		例如:	/bin/ls	或 ./ls
+	2.有命令别名(alial)找到该指令来执行
+	3.由 bash 内置的指令来执行
+	4.通过 PATH 这个变量的顺序搜寻到的第 1 个指令来执行
+
+source ~/.bashrc	不用退出系统,就可以使设定的环境变量生效
+.      ~/.bashrc
+
+~/.bash_history		历史命令资料库
+~/.bash_logout
+
+/etc/profile _______→ ~/.bash_profile	 _______→ 开始操作 bash
+       ↧                 ↧
+/etc/profile/*.sh	~/.bashrc
+        ↧                 ↧
+/etc/locale.conf	/etc/bashrc
+
+系统的合法 shell
+	ysh@debian:~$ cat /etc/shells
+
+系统历史命令查看
+	ysh@debian:~$ history
+
+命令与文件补全功能
+	tab键
+
+命令别名设定
+	ysh@debian:~$ alias
+	alial 命令别名='原命令'
+	
+查询命令是否为 bash shell 的内置命令
+	type ls
+
+查看系统变量
+	env	查看环境变量
+	set	查看所有变量,包括环境变量
+
+声明变量的类型
+	declare
+	typeset
+
+影响显示系统语言的变量
+	locale
+
+提示字段
+	PS1
+
+文件系统及调试程序的限制关系
+	ulimit
+
+垃圾桶
+	/dev/null
+
+
+位置参数变量
+$n	n为数字,$0 代表命令本身. $1~$9 代表第一到第九个参数
+	10以上需要用大括号包含.
+	例如:	${10}
+
+$*	这个变量代表命令中的所有的参数
+	$*把所有的参数都看成一个整体
+
+$@	这个变量也代表命令中的所有的参数
+	$@把每个参数区别对待
+
+$#	这个变量代表命令行中多有参数的个数
+
+预定义变量
+$?	最后一次命令执行的返回状态
+
+$$	表示当前 shell 进程的 PID
+ 
+$!	shell 最后一次运行后台进程的 PID
+
+
+
+#{"#"代表注释} FileName.sh
+#!/bin/bash         #bash脚本第一句
+echo "Hello World"  #打印 Hello World
+
+
+echo "Hello World" > TargetFile   #以覆盖方式写入[打印输出]
+cat SourceFile >> TargetFile      #以追加方式写入[对文件操作]
+cd ~                              #进入家目录
+cd ..                             #返回上一级目录
+source | " . "                    #source命令也称为"点命令",也就是一个点符号(.)
+source命令通常用于重新执行刚修改的初始化文件,使之立即生效,而不必注销并重新登录
+查询使用者目前的 crontab 内容:
+crontab -l                        #查询定时任务
+crontab -e                        #Linux定时任务
+
+
+
+
+
+

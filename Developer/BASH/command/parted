@@ -1,0 +1,168 @@
+### ===========================================================================
+# parted -l
+
+parted /dev/sdb
+
+(parted) mklabel
+(parted) mkpart
+
+
+mkfs -t vfat /dev/sdb
+VFAT是“扩展文件分配表系统”的意思,它对FAT16文件系统进行扩展，
+并提供支持长文件名，文件名可长达255个字符，VFAT仍保留有扩展名，而且支持文件日期和时间属性，
+为每个文件保留了文件创建日期/时间、文件最近被修改的日期/时间和文件最近被打开的日期/时间这三个日期/时间。
+linux处理的时候把fat/vfat/fat32的文件系统 统一用vfat来表示
+
+
+
+
+
+
+### ===========================================================================
+(1)命令行方式
+# parted /dev/sdb mklabel gpt mkpart 1 ext3 1 5T
+
+
+parted有个不提示用户参数选项，就是通过这个选项来实现非交互
+       -s, --script
+              never prompts for user intervention
+              
+parted -s /dev/sdb mklabel msdos
+parted -s /dev/sdb mkpart primary 0 -1
+
+
+### ===========================================================================
+(2)交互式命令方式
+parted /dev/sdb     对/dev/sdb进行分区或管理操作
+
+(parted) rm 1       rm删除命令(删除之前必须确保分区没有被挂载)
+(parted) rm 2
+
+(parted) mklabel   gpt	
+                    定义分区表格式
+                    常用的有msdos和gpt分区表格式，
+                    msdos不支持2TB以上容量的磁盘，
+                    所以大于2TB的磁盘选gpt分区表格式
+
+(parted)  mkpart   p1	
+                    创建第一个分区，名称为p1
+                    p1只是第一个分区的名称，
+                    用别的名称也可以，如part1
+
+File system type？  [ext2]?  ext3	
+                    定义分区格式
+                    不支持ext4，想分ext4格式的分区，
+                    可以通过mkfs.ext4格式化成ext4格式
+                    
+Start？  1
+                    定义分区的起始位置
+                    (单位支持K,M,G,T)
+End？   5T
+                    定义分区的结束位置
+                    (单位支持K,M,G,T)
+                    
+(parted) print      查看当前分区情况
+
+
+### ===========================================================================
+parted 命令的常用格式是：
+1、# parted [选项] <硬盘设备名>
+2、# parted [选项] <硬盘设备名> <子命令> [<子命令参数>]
+A.格式（1）用于进入parted 的交互模式，
+    在该模式下输入parted的子命令对指定的硬盘进行分区等操作。
+    quit 命令用于退出交互模式。
+B.格式（2）直接在命令行方式下对指定的硬盘进行分区等操作。
+
+其中常用的选项为：
+-h, ––help — 显示求助信息
+-i, ––interactive — 在必要时提示用户
+-l, ––list — 显示所有磁盘设备的分区表
+-s, ––script — 从不提示用户
+-v, ––version — 显示版本
+
+
+help [COMMAND] 	                
+ 打印命令的帮助信息，或指定命令的帮助信息
+
+print  [free|NUMBER|all]     	
+ 显示分区表, 指定编号的分区, 或所有设备的分区表
+
+mkpart PART-TYPE [FSTYPE] START END 	
+ 创建新分区。
+ PART-TYPE 是以下类型之一：
+ primary（主分 区）、extended（扩展分区）、logical（逻辑分区）。
+ START 和 END 是新分区开始和结束的具体位置。
+
+
+rm NUMBER 	
+ 删除指定编号 NUMBER 的分区。
+
+
+set NUMBER FLAG STATE 	
+ 对指定编号 NUMBER 的分区设置分区标记 FLAG。
+ 对于 PC 常用的 msdos 分区表来说，
+ 分区标记 FLAG 可有如下值：
+ ”boot”（引导）, “hidden”（隐藏）, “raid”（软RAID磁盘阵）, 
+ “lvm”（逻辑卷）, “lba” （LBA，Logic Block Addressing模式）。 
+  状态STATE 的取值是：on 或 off
+
+
+
+unit UNIT 	
+ 设置默认输出时表示磁盘大小的单位为 UNIT，UNIT 的常用取值可以为：
+ ‘MB’、‘GB’、‘%’（占整个磁盘设备的百分之多少）、
+ ‘compact’（人类易读方式，类似于 df 命令中 -h 参数的用）、
+ ‘s’（扇区）、‘cyl’ （柱面）、‘chs’ （柱面cylinders:磁头 heads:扇区 sectors 的地址）
+
+
+
+mkfs NUMBER FS-TYPE 	
+ 对指定编号 NUMBER 的分区创建指定类型 FS-TYPE 的文件系 统。
+
+
+
+mkpartfs PART-TYPE FSTYPE START END 	
+ 创建新分区同时创建文件系统。
+ FS-TYPE 是以下类型一：
+ ext2、fat16、fat32、linuxswap、NTFS、reiserfs、ufs 等
+
+
+
+cp [FROM-DEVICE] FROM-NUMBER TONUMBER 	
+ 将分区 FROM-NUMBER 上的文件系统完整地复制到分区TO-NUMBER 中，
+ 作为可选项还可以指定一个来源硬盘的设备名称FROM-DEVICE，若省略则在当前设备上进行复制。
+
+
+move NUMBER START END 	
+ 将指定编号 NUMBER 的分区移动到从 START 开始 END 结束的位置上。
+ 注意：（1）只能将分区移动到空闲空间中。
+      （2）虽然分区被移动了，但它的分区编号是不会改变的
+
+
+resize NUMBER START END 	
+ 对指定编号 NUMBER 的分区调整大小。分区的开始位置和结束位置由 START 和 END 决定
+
+
+check NUMBER
+ 检查指定编号 NUMBER 分区中的文件系统是否有什么错误
+
+
+rescue START END 	
+ 恢复靠近位置 START 和 END 之间的分区
+
+
+mklabel,mktable LABELTYPE 	
+ 创建一个新的 LABEL-TYPE 类型的空磁盘分区表，
+ 对于PC而言 msdos 是常用的 LABELTYPE。 
+ 若是用 GUID 分区表，LABEL-TYPE 应该为 gpt
+
+
+
+
+
+
+
+
+
+
+

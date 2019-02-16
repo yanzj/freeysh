@@ -1,0 +1,28 @@
+Fdisk分区工具
+
+1. Overview
+
+*Fdisk是IBM的老牌分区工具，支持绝大多数操作系统，
+几乎所有的Linux操作系统都默认装有fdisk；
+包括在Linux Rescue模式下依然能够使用。
+
+*fdisk是基于MBR的分区工具（是当年IMB设计给PC机来使用的），
+所以如果需要使用GPT，则无法使用fdisk进行分区
+
+*只有超级用户权限（如root，Uid=0的；可以用在命令行中输入id来查询）
+才可以执行fdisk，因为命令都是咋/sbin下面，需要特权级的用户；
+
+*使用su - 命令切换到Root用户
+
+*fdisk分区后，需要使用partprobe（立即生效）让内核识别新的分区
+
+2. Command Reference
+
+*fdisk –l # 列出所有安装的磁盘及分区信息
+
+*fdisk /dev/sdb #对目标磁盘进行分区操作
+
+*partprobe #分区之后，让内核更新分区信息，
+　否则系统需要restart后，内核才能识别新的分区
+
+*/proc/partitions 文件夹（目录）也可以用来查看分区信息

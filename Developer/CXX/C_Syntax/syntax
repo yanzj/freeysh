@@ -1,0 +1,194 @@
+### ===========================================================================﻿
+/*switch 开关语句*/
+switch(i)
+{
+    case 1:
+    {
+        printf("1111111111111");
+        break;
+    }
+    case 2:
+    {
+        printf("2222222222222");
+        break;
+    }
+     case 3:
+    {
+        printf("3333333333333");
+        break;
+    }   
+    defaut:
+    {
+        printf("Error");
+        break;
+    }
+}
+
+switch(expression){
+    case constant-expression  :
+       statement(s);
+       break; /* 可选的 */
+    case constant-expression  :
+       statement(s);
+       break; /* 可选的 */
+  
+    /* 您可以有任意数量的 case 语句 */
+    default : /* 可选的 */
+       statement(s);
+}
+
+
+
+if(boolean_expression)
+{
+   /* 如果布尔表达式为真将执行的语句 */
+}
+
+if(boolean_expression)
+{
+   /* 如果布尔表达式为真将执行的语句 */
+}
+else
+{
+   /* 如果布尔表达式为假将执行的语句 */
+}
+
+if( boolean_expression 1)
+{
+   /* 当布尔表达式 1 为真时执行 */
+   if(boolean_expression 2)
+   {
+      /* 当布尔表达式 2 为真时执行 */
+   }
+}
+
+
+
+
+/* C 语言中的 if...else if...else 语句 */
+if(boolean_expression 1)
+{
+   /* 当布尔表达式 1 为真时执行 */
+}
+else if( boolean_expression 2)
+{
+   /* 当布尔表达式 2 为真时执行 */
+}
+else if( boolean_expression 3)
+{
+   /* 当布尔表达式 3 为真时执行 */
+}
+else 
+{
+   /* 当上面条件都不为真时执行 */
+}
+
+
+
+/* C 语言中 while 循环的语法 */
+while(condition)
+{
+   statement(s);
+}
+
+
+
+/* C 语言中 for 循环的语法 */
+for ( init; condition; increment )
+{
+   statement(s);
+}
+
+
+
+/* C 语言中 do...while 循环的语法 */
+do
+{
+   statement(s);
+
+}while( condition );
+
+
+
+### ===========================================================================
+C 语言中 嵌套 for 循环 语句的语法：
+for ( init; condition; increment )
+{
+   for ( init; condition; increment )
+   {
+      statement(s);
+   }
+   statement(s);
+}
+C 语言中 嵌套 while 循环 语句的语法：
+while(condition)
+{
+   while(condition)
+   {
+      statement(s);
+   }
+   statement(s);
+}
+C 语言中 嵌套 do...while 循环 语句的语法：
+do
+{
+   statement(s);
+   do
+   {
+      statement(s);
+   }while( condition );
+
+}while( condition );
+
+
+
+### ===========================================================================
+定义函数
+C 语言中的函数定义的一般形式如下：
+
+返回值类型    函数名         参数列表
+return_type function_name( parameter list )
+{
+   body of the function
+}
+
+在 C 语言中，函数由一个函数头和一个函数主体组成。
+下面列出一个函数的所有组成部分：
+返回类型：一个函数可以返回一个值。
+return_type 是函数返回的值的数据类型。
+有些函数执行所需的操作而不返回值，
+在这种情况下，return_type 是关键字 void。
+函数名称：这是函数的实际名称。函数名和参数列表一起构成了函数签名。
+参数：参数就像是占位符。当函数被调用时，您向参数传递一个值，
+这个值被称为实际参数。
+参数列表包括函数参数的类型、顺序、数量。参数是可选的，
+也就是说，函数可能不包含参数。
+函数主体：函数主体包含一组定义函数执行任务的语句。
+
+
+
+
+### ===========================================================================
+定义结构
+为了定义结构，您必须使用 struct 语句。
+struct 语句定义了一个包含多个成员的新的数据类型，
+struct 语句的格式如下：
+
+struct [structure tag]
+{
+   member definition;
+   member definition;
+   ...
+   member definition;
+} [one or more structure variables];
+structure tag 是可选的，每个 member definition 是标准的变量定义，
+比如 int i; 或者 float f; 或者其他有效的变量定义。
+在结构定义的末尾，最后一个分号之前，您可以指定一个或多个结构变量，这是可选的。
+下面是声明 Book 结构的方式：
+struct Books
+{
+   char  title[50];
+   char  author[50];
+   char  subject[100];
+   int   book_id;
+} book;

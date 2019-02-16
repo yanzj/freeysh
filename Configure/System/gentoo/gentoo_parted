@@ -1,0 +1,199 @@
+### ===========================================================================
+### gentoo install ###
+
+
+
+
+### ===========================================================================
+1 Preparing the disks
+
+parted -a optimal /dev/sda
+mklabel gpt
+unit mib
+mkpart primary 1 3
+name 1 grub
+set 1 bios_grub on
+
+mkpart primary 3 131
+name 2 boot
+set 2 boot on
+
+mkpart primary 131 643
+name 3 swap
+
+mkpart primary 643 -1
+name 4 rootfs
+
+print
+
+quit
+
+
+
+### ===========================================================================
+mkfs.ext2 /dev/sda2
+mkfs.ext4 /dev/sda4
+
+mkswap /dev/sda3
+swapon /dev/sda3
+
+mount /dev/sda4 /mnt/gentoo
+
+
+
+### ===========================================================================
+2 Installing the Gentoo installation files
+
+date 113014592018
+
+cd /mnt/gentoo
+links https://www.gentoo.org/downloads
+
+tar xpvf stage3-*.tar.bz2 --xattrs-include='*.*' --numeric-owner
+
+
+
+
+
+3 Installing the Gentoo base system
+==============================================
+
+### Optional: Selecting mirrors
+mirrorselect -i -o >> /mnt/gentoo/etc/portage/make.conf
+
+
+mkdir --parents /mnt/gentoo/etc/portage/repos.conf
+cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
+
+
+### Copy DNS info
+cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
+
+
+### Mounting the necessary filesystems
+
+mount --types proc /proc /mnt/gentoo/proc
+mount --rbind /sys /mnt/gentoo/sys
+mount --make-rslave /mnt/gentoo/sys
+mount --rbind /dev /mnt/gentoo/dev
+mount --make-rslave /mnt/gentoo/dev 
+
+Note
+The --make-rslave operations are needed for systemd support later in the installation.
+
+
+### Entering the new environment
+chroot /mnt/gentoo /bin/bash
+source /etc/profile
+export PS1="(chroot) ${PS1}"
+
+
+### Mounting the boot partition
+mkdir /boot
+mount /dev/sda2 /boot
+
+
+### Configuring Portage
+emerge-webrsync
+
+
+### Choosing the right profile
+eselect profile list
+eselect profile set 2
+
+################################ Optional
+### Updating the @world set
+emerge --ask --verbose --update --deep --newuse @world
+
+
+
+### Configuring the USE variable
+
+
+
+
+### Timezone
+ls /usr/share/zoneinfo
+echo "Asia/Shanghai" > /etc/timezone
+emerge --config sys-libs/timezone-data
+
+
+
+### Configure locales
+eselect locale list
+eselect locale set 8
+
+
+env-update && source /etc/profile && export PS1="(chroot) $PS1"
+
+
+
+4 ### Configuring the Linux kernel
+===============================================================================
+
+emerge gentoo-sources
+emerge genkernel
+time genkernel all
+
+
+
+vi /etc/fstab
+/dev/sda2	/boot	ext2	defaults, noatime	0	2
+/dev/sda3	none	swap	sw			0	0
+/dev/sda4	/	ext4	noatime			0	1
+
+vi /etc/conf.d/hostname
+hostname="gentoo"
+
+
+vim /etc/hosts
+# IPv4 and IPv6 localhost aliases
+127.0.0.1	localhost gentoo
+
+
+emerge dhcpcd
+rc-update add dhcpcd default
+
+
+emerge virtual/ssh
+
+emerge syslog-ng
+
+emerge cronie
+
+
+rc-update add sshd default
+rc-update add syslog-ng default
+rc-update add cronie default
+
+Root 密码 ===================
+passwd
+
+
+
+useradd -m -G users,wheel,audio,lp,cdrom,portage,cron -s /bin/bash fratm
+passwd fratm
+
+emerge sys-boot/grub
+grub-install /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
+
+
+
+umount /mnt/gentoo/dev
+umount /mnt/gentoo/dev/shm
+umount /mnt/gentoo/pts
+umount /mnt/gentoo/boot
+umount /mnt/gentoo/proc
+reboot
+
+
+
+
+
+
+
+
+
+
+

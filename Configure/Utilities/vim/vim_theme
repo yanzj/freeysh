@@ -1,0 +1,18 @@
+###
+如何给vim中添加molokai主题
+github地址：https://github.com/tomasr/molokai
+
+先clone下来
+git clone git@github.com:tomasr/molokai.git 
+
+copy molokai.vim to ->/usr/share/vim/vim80/colors/
+
+
+编辑.vimrc文件，增加一下配置
+==========================
+colorscheme  molokai  
+
+set t_Co=256
+set background=dark
+
+$~ . .vimrc

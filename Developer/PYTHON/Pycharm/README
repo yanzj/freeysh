@@ -1,0 +1,81 @@
+### ===========================================================================
+Ctrl + /                    行注释/取消行注释
+Ctrl + Shift + /            块注释
+Tab / Shift + Tab           缩进、不缩进当前行
+Ctrl + D                    复制选定的区域或行
+Ctrl + Y                    删除选定的行
+
+Shift + Enter               另起一行
+Ctrl + Backspace            删除到字符开始
+Ctrl + Delete               删除到字符结束
+Ctrl + Numpad+/-            展开/折叠代码块（当前位置的：函数，注释等）
+Ctrl + shift + Numpad+/-    展开/折叠所有代码块
+
+Ctrl + Space                基本的代码完成（类、方法、属性）
+Ctrl + Alt + Space          快速导入任意类
+Ctrl+X/Shift+Delete         剪切当前行或选定的代码块到剪贴板
+Ctrl+C/Ctrl+Insert          复制当前行或选定的代码块到剪贴板
+Ctrl+V/Shift+Insert         从剪贴板粘贴
+
+
+
+
+### ===========================================================================
+设置IDE皮肤主题
+ 
+  File -> Settings -> IDE Settings -> Appearance -> Theme -> 选择“Alloy.IDEA Theme
+  或者在setting中搜索theme可以改变主题，所有配色统一改变
+  
+  
+设置编辑器“颜色与字体”主题
+  File -> Settings -> IDE Settings -> Editor -> Colors & Fonts -> Scheme name -> 选择"monokai"“Darcula”  
+  说明：先选择“monokai”，再“Save As”为"monokai-pipi"，因为默认的主题是“只读的”，
+  一些字体大小颜色什么的都不能修改，拷贝一份后方可修改！
+  修改字体大小
+  File -> Settings -> IDE Settings -> Editor -> Colors & Fonts -> Font -> Size -> 设置为“14”
+  
+  
+  
+设置缩进符为制表符“Tab”
+  File -> Default Settings -> Code Style
+  -> General -> 勾选“Use tab character”
+  -> Python -> 勾选“Use tab character”
+  -> 其他的语言代码同理设置
+  
+  
+  
+显示“行号”与“空白字符”
+  File -> Settings -> IDE Settings -> Editor -> Appearance
+  -> 勾选“Show line numbers”、“Show whitespaces”、“Show method separators”  
+  
+  
+去掉默认折叠
+  File -> Settings -> IDE Settings -> Editor -> Code Folding -> Collapse by default -> 全部去掉勾选 
+  
+  
+  
+“代码自动完成”时间延时设置
+  File -> Settings -> IDE Settings -> Editor -> Code Completion 
+  -> Auto code completion in (ms):0
+  -> Autopopup in (ms):500  
+  
+  
+修改IDE快捷键方案
+  File -> Settings -> IDE Settings -> Keymap
+  系统自带了好几种快捷键方案，下拉框中有如“defaul”,“Visual Studio”,在查找Bug时非常有用,“NetBeans 6.5”,“Default for GNOME”等等可选项，
+  因为“Eclipse”方案比较大众，个人用的也比较多，最终选择了“Eclipse”。
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+    
+

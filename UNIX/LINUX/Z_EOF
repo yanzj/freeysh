@@ -1,0 +1,17 @@
+### EOF ->end of file === ctrl+d
+1. cat <<EOF >test.sh
+>123
+>456
+>7890
+>EOF
+
+
+
+2. cat <<ABC >test.sh
+>123
+>456
+>7890
+>ABC
+
+
+

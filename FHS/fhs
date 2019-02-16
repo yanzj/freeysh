@@ -1,0 +1,135 @@
+### ===========================================================================
+FHS     Filesystem Hierarchy Standard
+1 Root Filesystem =============================================================
+Directory-----------Description------------------------------
+/bin                Essential command binaries
+/boot               Static files of the boot loader
+/dev                Device files
+/etc                Host-specific system configuration
+/lib                Essential shared libraries and kernel modules
+/media              Mount point for removeable media
+/mnt                Mount point for mounting a filesystem temporarily
+/opt                Add-on application software packages
+/sbin               Essential system binaries
+/srv                Data for services provided by this system
+/tmp                Temporary files
+/usr                Secondary hierarchy
+/var                Variable data
+
+Specific Options->
+/hoem               User home directories (optional)
+/lib<qual>          Alternate format essential shared libraries (optional)
+/root               Home directory for the root user (optional)
+/home
+/proc : Kernel and process information virtual filesystem
+
+
+
+
+2 The /usr Hierarchy ==========================================================
+The following directories, or symbolic links to directories, are required in /usr .
+/usr/bin            Most user commands
+/usr/include        Header files included by C programs
+/usr/lib            Libraries
+/usr/local          Local hierarchy (empty after main installation)
+/usr/sbin           Non-vital system binaries
+/usr/share          Architecture-independent data
+
+Specific Options->/usr
+X11R6               XWindow System, version 11 release 6 (optional)
+games               Games and educational binaries (optional)
+lib<qual>           Alternate Format Libraries (optional)
+src                 Source code (optional)
+
+
+The following directories, or symbolic links to directories, must be in /usr/local
+bin                 Local binaries
+etc                 Host-specific system configuration for local binaries
+game                Local game binaries
+include             Local C header files
+lib                 Local libraries
+man                 Local online manuals
+sbin                Local system binaries
+share               Local architecture-independent hierarchy
+src                 Local source code
+
+
+man man /usr/share/<mandir>/
+man1                User programs (optional)
+man2                System calls (optional)
+man3                Library calls (optional)
+man4                Special files (optional)
+man5                File formats (optional)
+man6                Games (optional)
+man7                Miscellaneous (optional)
+man8                System administration (optional)
+
+
+
+
+3 The /var Hierarchy ==========================================================
+cache               Application cache data
+lib                 Variable state information
+local               Variable data for /usr/local
+lock                Lock files
+log                 Log files and directories
+opt                 Variable data for /opt
+run                 Data relevant to running processes
+spool               Application spool data
+tmp                 Temporary files preserved between system reboots
+
+Specific Options->/var
+account Process accounting logs (optional)
+crash   System crash dumps (optional)
+games   Variable game data (optional)
+mail    User mailbox files (optional)
+yp      Network Information Service (NIS) database files
+(optional)
+
+
+
+
+
+
+
+
+cat /proc/partitions
+======================
+
+major 表示主设备号
+minor 表示次设备号
+#blocks 表示的是block的数目
+name 是指的设备名称
+
+
+    /proc
+Linux系统上的/proc目录是一种文件系统，即proc文件系统。
+与其它常见的文件系统不同的是/proc是一种伪文件系统（也即虚拟文件系统）
+
+    /sys
+ramdisk 文件系统基于磁盘模拟技术，实际文件系统是ex2 ex3等。
+sysfs是一种基于ram文件系统和proc一样
+Sysfs文件系统是一个类似于proc文件系统的特殊文件系统，
+用于将系统中的设备组织成层次结构，并向用户模式程序提供详细的内核数据结构信息。
+其实，就是在用户态可以通过对sys文件系统的访问，来看内核态的一些驱动或者设备等。
+ 
+
+    /lost+found
+如果你不小心删除了lost+found目录，不用使用mkdir命令创建lost+found目录，
+应该使用 mklost+found命令创建lost+found目录：
+$ cd /
+$ sudo mklost+found
+
+    /run
+/run 目录是说, 里面的东西是系统运行时需要的, 不能随便删除. 
+但是重启的时候应该抛弃. 下次系统运行时重新生成.
+
+    
+
+
+
+
+
+
+
+

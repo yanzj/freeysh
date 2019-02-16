@@ -1,0 +1,64 @@
+### ===========================================================================
+
+◆ /etc/ssh/sshd_config
+	RSAAuthentication yes  				#是否允许使用纯 RSA 公钥认证。仅用于SSH-1
+	PubkeyAuthentication yes  			#是否允许公钥认证。仅可以用于SSH-2
+	PermitRootLogin yes       			#root用户是否能通过 ssh登录
+	PasswordAuthentication yes 			# 是否允许使用基于密码的认证。默认为"yes"
+	PermitRootLogin prohibit-password  #禁止密码登录
+	
+	
+	
+◆　秘钥有谁生成
+	1.假设由　A, B两台服务器
+	2.假设　A需要登录B
+	3.秘钥由访问请求方 A服务器生成，并把生成的公钥交给B
+	4.公钥可以在多台服务器导入
+	5.1台服务器导入了 A的公钥，即意味着承认　A有访问自己的权限	
+	
+	
+	
+◆ 账号
+	访问和被访问的服务，需有相同的账号
+	而且秘钥有该账号生成
+
+
+◆ 秘钥生成
+	1.在A 服务器上执行命令
+	ssh-keygen -t [rsa|dsa]
+		rsa和dsa 是２中常用的加密算法
+		命令执行的过程需用户在要输入的地方连续按回车即可
+		(输入别的内容)，则登录的时候还的输入秘钥的密码
+	
+	2.执行成功后，在用户 home目录下的　.ssh子目录下
+	　	会有生成的私钥和公钥文件
+	　	
+	
+◆　公钥导入
+		将公钥文件　id_rsa.pub 上传到　B服务器，然后执行
+		cat id_rsa.pub >> ~/.ssh/authorized_key
+	
+	
+	
+◆　修改权限
+		１．Ａ服务器上的　.ssh和秘钥文件权限在 ssh-keygen生成时已设定好了
+		２．Ｂ服务器上如果首次添加　authorized_key,需修改权限
+			chmod 600 authorized_key
+			chmod 700 -R .ssh	
+	
+	
+### ===========================================================================	
+SSH 为 Secure Shell 的缩写
+ssh root@192.168.0.88      				  # Linux os 之间远程登录命令(ssh username@ip)
+scp root@192.168.0.88:/root/test.txt .    #远程下载(. 代表本机当前目录)
+scp -r /root/123/  root@192.168.0.88      #远程上传(上传目录需要加‘-r'选项)
+sftp root@192.168.0.88                    #文件传输命令(文件服务器命令)
+
+xshell 远程工具
+SSH密钥对登录->
+ssh-keygen -t rsa                         #客户端生成秘钥对(公钥&私钥)
+id_rsa.pub                                #上传公钥文件
+~/.ssh/authorized_keys                    #导入公钥信息                
+[ ~ 代表用户家目录 ]
+	
+	

@@ -1,0 +1,66 @@
+
+GitHub配置信息
+
+git config --global user.name "hongyu"
+git config --global user.email "961832097@qq.com"	
+git config --global core.editor vim
+git config --list			
+
+git init 
+git add .
+git commit -m "frist commit"
+
+1. 创建 github账号
+2. 创建一个新仓库
+3. 创建 SSH_Key 密钥对
+
+ssh-keygen -t rsa
+
+4.在 github 上， 用户图标下 Settings-> SSH and GPG Keys,
+  导入公钥至 New SSH key
+
+5.验证是否成功
+
+ssh -T git@github.com
+
+
+git remote add origin git@github.com:uygnoh/freeysh.git 
+git push -u origin master
+git push origin master
+
+##############################################################
+解决需要密码输入问题
+	
+##############查看远程关联方式
+git remote -v
+
+
+1. 移出旧的https 的origin
+git remote rm origin
+
+2.下面把它换成ssh 的关联方式 
+git remote add origin git@github.com:uygnoh/freeysh.git
+
+
+3. 第一次使用
+git push -u origin master
+
+4. 以后每次提交就可以使用
+git push origin master
+
+git init
+git add .	添加当前目录下的所有文件
+git comm -m "first commit"
+
+git push origin master
+
+
+
+
+
+
+
+
+
+
+

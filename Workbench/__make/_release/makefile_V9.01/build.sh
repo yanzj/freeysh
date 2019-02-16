@@ -1,0 +1,7 @@
+### Cortex-M 编译烧写脚本
+### =====================
+
+#!/bin/bash
+make
+cd output
+st-flash write main.bin 0x8000000

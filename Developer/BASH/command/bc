@@ -1,0 +1,16 @@
+### ====================
+GNU bc->basic calculator
+========================
+
+scale=4
+
+
+echo "45*2" | bc
+echo "scale=4; 10/3" | bc
+echo "obase=16; ibase=2; 1111;" | bc
+
+注意：为10时可不设置ibase obase的值，obase要尽量放在ibase前，
+     因为ibase设置后，后面的数字都是以ibase的进制来换算的
+      操作基本都是围绕数字，默认的输出输入进制都是十进制。
+      数字有2个属性 长度(length)和小数点后精度(scale), 
+     length值数字有效数字的长度，scale是值小数点后的长度

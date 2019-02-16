@@ -1,0 +1,522 @@
+### ===========================================================================
+﻿#{"#"代表注释} FileName.sh
+#!/bin/bash         #bash脚本第一句
+echo "Hello World"  #打印 Hello World
+
+
+
+
+### ===========================================================================
+单分支if语句
+if [ 条件判断式 ];then
+	程序
+fi
+	
+或者是
+
+if [ 条件判断式 ]
+then
+	程序
+
+fi
+#统计根分区使用率
+#!/bin/bash
+rate=$(df -h | grep "/dev/sda3" | awk '{ print $5 }' | cut -d "%" -f 1)
+if [ $rate -ge 80 ];then
+	echo "Warning! /dev/sda3 is full!"
+fi
+
+
+### ===========================================================================	
+双分支if语句
+ 
+if [ 条件判断式 ];then
+	条件成立执行此程序
+else
+	条件不成立执行程序
+fi
+---备份数据
+#!/bin/bash
+ntpdate asia.pool.ntp.org &>/dev/null	#同步系统时间
+date=$(date +%y%m%d)			#把当前系统时间按照年月日赋值给变量date
+size=$(du -sh /var/lib/mysql)		#统计mysql大小，并把值赋给size
+if [ -d /tmp/dbbak ]
+then
+	echo "Date: $date" > /tmp/dbbak/dbinfo.txt
+	echo "Date size: $size" >> /tmp/dbbak/dbinfo.txt
+	cd /tmp/dbbak
+	tar -zcf mysql-lib-$date.tar.gz /var/lib/mysql dbinfo.txt &>/dev/null
+	rm -rf /tmp/dbbak/dbinfo.txt
+else
+	mkdir /tmp/dbbak
+	echo "Date: $date!" > /tmp/dbbak/dbinfo.txt
+	echo "Date size : $size" >> /tmp/dbbak/dbinfo.txt
+	cd /tmp/dbbak
+	tar -zcf mysql-lib-$date.tar.gz /var/lib/mysql dbinfo.txt &>/dev/null
+	rm -rf /tmp/dbbak/dbinfo.txt
+fi
+
+nmap端口扫描工具
+nmap -sT 192.168.219.133
+
+#!/bin/bash
+port=$(nmap -sT 192.168.219.133 | grep tcp | grep ssh | awk '{ print $2 }')	#提取信息
+if [ "$port" == "open" ]; then
+	echo "$(date) sshd is ok!" >> /tmp/sshd_ok-log.txt
+else
+	/etcinit.d/ssh restart &>/dev/null					#输出信息放入垃圾桶
+	echo "$(date) sshd is reboot" >> /tmp/sshd_err-log.txt			#记录日志
+fi
+
+
+/etc/rc.d/init.d/ssh restart     重启服务
+
+
+### ===========================================================================
+多分支if语句
+
+if [ 条件判断式1 ]; then
+	当条件判断式1成立，执行程序1
+elif [ 条件判断式2 ]; then
+	当条件判断式2成立，执行程序2
+else
+	当所有条件都不成立，执行此程序
+fi
+
+#!/bin/bash
+read -p "please input a filename: " file #接收键盘的输入并赋值给变量file
+if [ -z "$file" ]; then		#判断文件名是否为空
+	echo "Error,please input a filename"
+	exit 1
+elif [ ! -e "$file" ]; then	#判断文件名是否存在
+	echo "Your input is not a file"
+	exit 2
+elif [ -f "$file" ]; then       #判断是否是普通文件
+	echo "$file is a regulare file"
+elif [ -d "$file" ]; then	#判断是否是目录文件
+	echo "$file is a directory"
+else				#输出其他文件
+	echo "$file is an other file"
+fi
+
+
+
+
+### ===========================================================================
+case语句
+
+case $变量名 in
+	"值1”)
+		如果变量的值等于值1，则执行程序1
+		;;
+	"值2")
+		如果变量的值等于值2，则执行程序2
+		;;
+	......
+	*)
+		如果变量的值都不是以上的值，则执行此处程序
+		;;
+esac
+
+#!/bin/bash
+echo "your want to shenzhen,please input '1' "
+echo "your want to shanghai,please input '2' "
+echo "your want to xi zang ,please input '3' "
+read -t 30 p "please input select:" set
+case "$set" in
+	"1")
+		echo "shenzhen,yes"
+		;;
+	"2")
+		echo "shanhai,yes"
+		;;
+	"3")
+		echo "xi zang,yes"
+		;;
+	*)
+		echo "Error,please your1,2,3"
+		;;
+eaac
+
+
+### ===========================================================================
+#循环输出1 2 3 4 5 6
+for i in 1 2 3 4 5 6 
+	do 
+		echo $i
+	done
+
+for time in morning noon afternoon evening
+	do
+		echo "this is time is $time"
+	done
+
+#批量解压缩脚本
+cd /root/lamp
+ls *.tar.gz > ls.log
+for i in $(cat ls.log)
+	do
+		tar -zxf $i &>/dev/null
+	done
+rm -rf /root/lamp/ls.log
+
+
+
+### ===========================================================================
+for((初始值;循环变量;变量变化))
+do
+	程序
+done
+#从1加到100
+#!/bin/bash
+
+s=0
+for((i=1;i<=100;i=i+1))
+do
+	s=$(( $s+$i ))
+done
+echo $s
+
+
+
+### ===========================================================================
+#判断name num pass 是否不为空
+if [ ! -z "$name" -a ! -z "$num" -a ! -z "$pass" ]; then
+	y=$(echo $name | sed 's/^[0-9]*$//g')		#以数字开头，以数字结尾
+	if [ -z "$y" ]; then				#判断是否为纯数字
+		for(( i=1;i<=$num;i++ ))
+		do
+			useradd $name$i &>/dev/null     #添加用户名
+			echo $pass | passwd --stdin "$name$i" &>/dev/null #为用户名添加密码
+		done
+		
+	fi
+fi
+
+
+### ===========================================================================
+while循环是不定循环，也称作条件循环
+只有条件判断式成立，就会一直循环下去
+
+while [ 条件判断式 ]
+do 
+	程序
+done
+#从1加到100
+#!/bin/bash
+i=1
+s=0
+while [ $i -le 100 ]		#i <= 100
+do
+	s=$(( $s + $i ))
+	i=$(( $i + 1 ))
+done
+echo "sum is: $s"
+
+
+
+### ===========================================================================
+until与whil相反
+#!/bin/bash
+i=1
+s=0
+until [ $i -gt 100 ]		#i >100
+do
+	s=$(( $s + $i ))
+	i=$(( $i + 1 ))
+done
+echo "sum is $s"
+
+
+
+### ===========================================================================
+正则表达式
+通配符式完全匹配,正则是包含匹配
+grep awk sed           支持正则表达式
+
+字符截取命令cut
+cut [选项] 文件名   #-d指定分割符  -f指定提取的列
+cut -d ":" -f 1,3 /etc/passwd
+
+\n换行   \r回车    \t水平输出退格tab  \v垂直输出tab键
+printf "%s %s %s\n" 1 2 3 4 5 6
+
+df -h | awk '{ print $1 }'
+df -h | awk '{ printf $1 "\t" $2 "\n }'
+df -h | awk '{ print $1 "\t" $2 }'
+df -h | grep sda1 | awk '{ print $5 }' | cut -d "%" -f 1
+
+ysh=$(df -h | grep sda1 | awk '{ print $5 }' | cut -d "%" -f 1)
+echo $ysh
+
+FS=":" 格式分割符为:
+awk 'BEGIN{ FS=":" }{ print $1 "\t" $3 }' /etc/passwd
+
+sed 轻量量级的流编辑器
+sed [选项] '[动作]' 文件名
+-n
+-e	永许对输入数据应用多条命令编辑
+-i	用sed的修改的结果直接修改读取数据的文件，而不是由屏幕输出
+
+sed '2p' ysh.txt   输出ysh.txt文件第2行
+sed '2,4d' ysh.txt 删除ysh.txt文件第2行到第4行
+sed '2a hello' ysh.txt 在第2行后追加hello
+sed '2i hello' ysh.txt 在第2行前插入hello
+sed '2i hello \ ysh' ysh.txt
+sed '2c xxxxx' ysh.txt 把第2行的内容替换成xxxxx
+sed '3s /12/22/g' ysh.txt 把第2行的12替换成22
+
+sed -i '3s /12/22/g' ysh.txt 直接修改源文件
+sed -e 's /ysh//g;/hos//g' ysh.txt
+
+sort 排序
+
+
+
+
+### ===========================================================================
+文件判断是否存在
+[ -e /etc ]
+[ -d /etc ]       目录文件
+[ -f /etc/passwd ]普通文件
+[ -d /root ] && echo "yes" || echo "no"
+
+[ 文件1 -nt 文件2 ]  新
+[ 文件1 -ot 文件2 ]  旧
+[ 文件1 -ef 文件2 ]  inode是否一致
+
+
+两个整数之间的比较
+[ a -eq b ]	==
+[ a -ne b ]	!=
+[ a -gt b ]	>
+[ a -lt b ]	<
+[ a -ge b ]	>=
+[ a -le b ]	<=
+
+
+判断字符串
+
+[ -z 字符串 ]	为空返回真
+[ -n 字符串 ]   非空返回真
+[ 字符串1 == 字符串2 ]
+[ 字符串1 != 字符串2 ]
+
+多重条件判断
+[ 判断1 -a 判断2 ]	逻辑与
+[ 判断1 -o 判断2 ]      逻辑或
+[ ! 判断 ]		逻辑非
+
+
+
+
+### ===========================================================================
+echo "Hello World" > TargetFile   #以覆盖方式写入[打印输出]
+cat SourceFile >> TargetFile      #以追加方式写入[对文件操作]
+cd ~                              #进入家目录
+cd ..                             #返回上一级目录
+source | " . "                    #source命令也称为"点命令",也就是一个点符号(.)
+source命令通常用于重新执行刚修改的初始化文件,使之立即生效,而不必注销并重新登录
+查询使用者目前的 crontab 内容:
+crontab -l                        #查询定时任务
+crontab -e                        #Linux定时任务
+
+echo -e "\e[1;31m ysh \e[0m"      #打印输出 ysh 显示红色
+
+chmod 755 hello.sh
+-----------------------------------------------------------------------------
+history                           历史命令 [/etc/profile]
+!number                           重复执行第number条命令
+!!                                重复执行上一条命令!
+!字符串                            重复执行最后一条以该字符串开头的命令
+                            
+(Tab)键                           输入命令或文件是，按“Tab”键会自动补全
+
+alias                             别名查询
+alias 别名='源命令'                 设定命令别名
+
+vim /root/.bashrc                  让Root用户别名永久生效
+unalias                            删除别名
+ctrl+c                             强制终止当前命令
+
+
+
+### ===========================================================================
+标准输入输出
+________________________________________________________________________________
+设备            设备文件名     文件描述符           类型
+键盘           /dev/stdin	     0              标准输入
+显示器         /dev/stdout        1              标准输出
+显示器         /dev/stderr        2              标准错误输出
+__________________________________________________________________________________
+标准输出重定向   命令 > 文件           #以覆盖的方式，把命令的正确输出输出到指定的文件或设备中
+               命令 >> 文件          #以追加的方式，把命令的正确输出输出到指定的文件或设备中
+__________________________________________________________________________________
+标准错误输出     错误命令 2> 文件
+重定向          错误命令 2>> 文件
+
+命令 &> 文件                        #以覆盖的方式，把正确的输出和错误的输出都保存在同一个文件中
+命令 &>> 文件                       #以追加的方式，把正确的输出和错误的输出都保存在同一个文件中
+命令>>文件1 2>>文件2                #把正确的输出追加到文件1，把错误的输出追加到文件2
+
+
+
+### ===========================================================================
+多命令顺序执行
+;                   命令1;命令2
+&&                  逻辑与；当命令1正确执行，命令2才会执行；当命令1执行不正确，则命令2不会执行
+||                  逻辑或；当命令1执行不正确，命令2才会执行；当命令1正确执行，则命令2不会执行
+                    ;命令&& echo yes || echo no
+                    
+                    
+                    
+### ===========================================================================
+管道符"|"
+命令1 | 命令2       #命令1的正确输出做为命令2的操作对象
+
+grep [选项] "搜索内容" 文件名   grep "root" /etc/passwd
+
+
+
+
+### ===========================================================================
+通配符
+
+?	匹配任意一个字符
+*	匹配0个或任意多个字符,也就是可以匹配任何内容
+
+[]	匹配中括号中任意一个字符.
+	例如:[abc]代表一定匹配一个字符,或者是a,或者是b,或者是c.
+
+[-]	匹配中括号中任意一个字符. - 代表一个范围
+	例如:[a-z],代表匹配一个小写字母
+
+[^]	^逻辑非,表示匹配不是中括号内的一个字符.
+	例如:[^0-9]代表匹配不是数字的字符
+ls *abc* 	8abc  abc abcd
+ls *abc  	8abc  abc
+ls ?abc	 	8abc
+ls [0-9]abc	8abc
+ls [^0-9]abc	sabc   
+注意:中括号和问号一定要匹配一个字符
+
+
+
+### ===========================================================================
+bash中的特殊符号
+''      在单引号中,所有的特殊字符,如:"$"和"``"反引号都没有特殊含义
+""      在双引号中,所有的特殊字符都没有特殊含义.但是:"$" "``" "\"除外,
+                               拥有调用变量的值 引用系统命令 转义符
+``      引用系统命令
+$()     引用系统命令
+$       调用变量的值
+#       注释
+\       转义符
+
+
+
+
+### ===========================================================================
+变量定义
+name=ysh    name='ysh hu'
+echo $name
+
+变量的叠加
+aa=131
+aa="$aa"456
+aa=${aa}789
+
+set 查看所有的变量
+
+
+环境变量
+env	查询环境变量
+unset	删除变量
+
+export 变量名=变量值	#申明环境变量
+pstree 确定进程树 exit
+PATH="PATH":/root	变量叠加
+
+echo $PS1	定义系统提示符
+
+
+位置参数变量
+
+$n	n为数字.$0代表命令本身.$1~$9代表第1到第9个参数
+	10以上的参数需要用大括号包含. ${10}
+
+$*	这个变量代表命令行中所有的参数,
+	$*把所有的参数看做一个整体.
+
+$@	这个变量代表命令行中所有的参数,
+	$@把每个参数区别对待
+
+$#	这个变量代表命令行中所有参数的个数
+
+#$* $@区别
+#!/bin/bash
+for i in "$*"
+	do
+		echo $i
+	done
+for y in "$@"
+	do
+		echo $y
+	done
+
+echo $#
+
+
+预定义变量
+
+$?	返回最后一次执行命令的状态
+$$	当前进程的进程号(PID)	
+$!	后台运行的最后一个进程号(PID)
+
+
+
+### ===========================================================================
+接收键盘的输入
+read  [选项] [变量名]
+
+-p "please  "	提示信息
+name            把用户的输入保存到变量name中
+-t 30		等待30秒
+-n 1		选项只接收一个字符就会执行		
+-s              隐藏输入
+read -t 30 -p "Please input your name:" name
+
+echo "Name is $name"
+
+read -s -t 30 "Please enter your age:" age
+
+echo -e "\n"
+echo "Age is $age"
+
+read -n 1 -t 30 -p "Please select your gender[m/f]:" gender
+echo -e "\n"
+echo "Sex is $gender"
+
+
+
+### ===========================================================================
+数值运算
+dd=$(( $a+$b ))
+环境变量配置文件
+source 或 . 命令
+
+/etc/profile
+/etc/profile.d/*.sh
+	~/.bash_profile	只对当前用户生效
+	~/.bashrc	只对当前用户生效
+/etc/bashrc
+
+
+
+
+
+
+
+
+
+
