@@ -1,0 +1,59 @@
+### ===========================================================================
+介绍三个与正则表达式相关的处理命令
+grep/egrep/fgrep:在文件中查找字符串(筛选)
+sed:流编辑(加工)
+awk:逐行扫描进行文本处理的一门语言(筛选与加工)
+
+
+
+### ===========================================================================
+grep在文件中查找字符串
+grep(Global regular expression print)
+语法
+grep 模式 文件名列表
+举例
+    grep O_RDWR *.h
+    ps -ef | grep liang
+    ls -l / | grep '^d' | wc –l
+    grep '[0-9]*' shudu.c
+    grep '[0-9][0-9]*' shudu.c
+
+
+
+### ===========================================================================
+grep/egrep/fgrep
+egrep 使用扩展正则表达式ERE描述模式
+    在指定模式方面比grep更灵活
+    
+fgrep 快速搜索指定字符串
+    按字符串搜索而不是按模式搜索。
+    
+grep选项
+-F, --fixed-strings     Fixed strings (instead of regular expressions)
+-G, --basic-regexp      Basic regular expression (BRE)
+-E, --extended-regexp   Extended regular expression (ERE)
+-P, --perl-regexp       Perl-compatible regular expression (PCRE)
+查PCRE语法:man pcresyntax
+
+
+
+### ===========================================================================
+grep/fgrep/egrep选项
+选项
+    -n 显示时每行前面显示行号
+    -v 显示所有不包含模式的行
+    -i 字母比较时忽略字母的大小写
+    
+例:grep -n main *.c
+    查找含有正则表达式main的行,并打印行号
+    当文件数超过一个时,除了输出行号,还输出文件名
+    
+例: grep -v '[Dd]isable' dev.stat>dev.active
+    取消文件中所有含有指定模式的行,生成新文件
+    
+例:grep -i richard telnos
+    在文件中检索字符串richard,不顾字母的大小写
+
+
+
+

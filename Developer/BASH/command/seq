@@ -3,9 +3,10 @@ seq 是Linux 中一个预设的外部命令，一般用作一堆数字的简化�
 
 
 它有三个选项
--f, --format=FORMAT use printf style floating-point FORMAT (default: %g)
--s, --separator=STRING use STRING to separate numbers (default: \n)
--w, --equal-width equalize width by padding with leading zeroes
+    -f, --format=FORMAT use printf style floating-point FORMAT (default: %g)
+    -s, --separator=STRING use STRING to separate numbers (default: \n)
+    -w, --equal-width equalize width by padding with leading zeroes
+
 -f 最常用 , 例如一次制做 10 个名 dir001 , dir002 .. dir010 的目录，
 我们可以运行下面的命令便可
 seq -f 'dir%03g' 1 10 | xargs mkdir
