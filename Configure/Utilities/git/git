@@ -1,5 +1,5 @@
 ### ===========================================================================
-git@github.com:uygnoh/FreeBSD_ysh.git
+git remote add origin git@github.com:uygnoh/FreeBSD_ysh.git
 
 
 ### git-hub Account 
