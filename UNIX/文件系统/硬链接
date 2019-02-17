@@ -19,8 +19,8 @@ $ ls -i chapt0 intro
     13210 chapt0
     13210 intro
     
-chapt0与intro同时存在时,地位完全平等
-删chapt0文件,则intro仍存在但link数减1
-硬连接,只限于同一文件系统中的普通文件
+    1 chapt0与intro同时存在时,地位完全平等
+    2 删chapt0文件,则intro仍存在但link数减1
+    3 硬连接,只限于同一文件系统中的普通文件
 
 
