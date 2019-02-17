@@ -1,7 +1,8 @@
 ### ===========================================================================
 FHS     Filesystem Hierarchy Standard
 1 Root Filesystem =============================================================
-Directory-----------Description------------------------------
+/                   根目录
+
 /bin                Essential command binaries
 /boot               Static files of the boot loader
 /dev                Device files
@@ -17,17 +18,20 @@ Directory-----------Description------------------------------
 /var                Variable data
 
 Specific Options->
-/hoem               User home directories (optional)
+/home               用户的个人目录，包含保存的文件和个人设置等
 /lib<qual>          Alternate format essential shared libraries (optional)
 /root               Home directory for the root user (optional)
-/home
-/proc : Kernel and process information virtual filesystem
+/proc               Kernel and process information virtual filesystem
+/run
+/sys
+/lost+found
 
+/vmlinuz,    /initrd.img ->link_soft
 
-
-
+### ===========================================================================
 2 The /usr Hierarchy ==========================================================
 The following directories, or symbolic links to directories, are required in /usr .
+
 /usr/bin            Most user commands
 /usr/include        Header files included by C programs
 /usr/lib            Libraries
@@ -41,7 +45,6 @@ games               Games and educational binaries (optional)
 lib<qual>           Alternate Format Libraries (optional)
 src                 Source code (optional)
 
-
 The following directories, or symbolic links to directories, must be in /usr/local
 bin                 Local binaries
 etc                 Host-specific system configuration for local binaries
@@ -52,7 +55,6 @@ man                 Local online manuals
 sbin                Local system binaries
 share               Local architecture-independent hierarchy
 src                 Local source code
-
 
 man man /usr/share/<mandir>/
 man1                User programs (optional)
@@ -66,7 +68,7 @@ man8                System administration (optional)
 
 
 
-
+### ===========================================================================
 3 The /var Hierarchy ==========================================================
 cache               Application cache data
 lib                 Variable state information
@@ -88,13 +90,8 @@ yp      Network Information Service (NIS) database files
 
 
 
-
-
-
-
-
+### ===========================================================================
 cat /proc/partitions
-======================
 
 major 表示主设备号
 minor 表示次设备号
@@ -123,13 +120,3 @@ $ sudo mklost+found
     /run
 /run 目录是说, 里面的东西是系统运行时需要的, 不能随便删除. 
 但是重启的时候应该抛弃. 下次系统运行时重新生成.
-
-    
-
-
-
-
-
-
-
-
