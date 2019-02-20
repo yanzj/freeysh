@@ -1,5 +1,7 @@
 ### ===========================================================================
 
+https://wiki.archlinux.org/index.php/Secure_Shell_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
+
 ◆ /etc/ssh/sshd_config
 	RSAAuthentication yes  				#是否允许使用纯 RSA 公钥认证。仅用于SSH-1
 	PubkeyAuthentication yes  			#是否允许公钥认证。仅可以用于SSH-2
