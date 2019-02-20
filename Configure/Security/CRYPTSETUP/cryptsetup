@@ -1,0 +1,124 @@
+### ===========================================================================
+Crypsetup工具加密
+Crypsetup工具加密的特点：
+1 加密后不能直接挂载
+2 加密后硬盘丢失也不用担心数据被盗
+3 加密后必须做映射才能挂载
+
+
+### ===========================================================================
+(A)准备环境：
+1． 确认cryptsetup软件是否安装：
+
+
+### ===========================================================================
+(B)新建磁盘分区：
+[root@localhost ~]# fdisk -cu /dev/sdb
+Command (m for help): n #新建分区
+Command action
+e extended
+p primary partition (1-4)
+p #选择主分区
+Partition number (1-4): 1 #分区号为1
+First sector (2048-41943039, default 2048): #此处回车
+Using default value 2048
+Last sector, +sectors or +size{K,M,G} (2048-41943039, default 41943039): +5G #给定大小为5G
+Command (m for help): w #保持存对硬盘的更改并退出
+The partition table has been altered!
+Calling ioctl() to re-read partition table.
+Syncing disks.
+[root@localhost ~]# partx -a /dev/sdb #让系统重新读取磁盘/dev/sdb的分区表
+
+
+
+
+### ===========================================================================
+1.使用创建好分区格式化为加密分区：
+cryptsetup luksFormat /dev/sdb1
+WARNING!
+========
+This will overwrite data on /dev/sdb1 irrevocably.
+Are you sure? (Type uppercase yes): YES                         # 注意这里必须是大写的YES
+Enter LUKS passphrase:                                          #输入密码
+Verify passphrase:                                              #再次输入
+Command successful.
+
+
+
+### ===========================================================================
+2.映射分区：
+[root@localhost ~]# cryptsetup luksOpen /dev/sdb1 fage_crypt    #把sdb1映射为fage_crypt
+Enter passphrase for /dev/sdb1:                                 #此处输入加密密码
+[root@localhost ~]# ls /dev/mapper/fage_crypt                   #查看映射的磁盘
+    /dev/mapper/fage_crypt
+[root@localhost ~]# cryptsetup status /dev/mapper/fage_crypt    #查看加密分区的状态
+    /dev/mapper/fage_crypt is active.
+    type: LUKS1
+    cipher: aes-cbc-essiv:sha256
+    keysize: 256 bits
+    device: /dev/sdb1
+    offset: 4096 sectors
+    size: 10481664 sectors
+    mode: read/write
+
+
+
+### ===========================================================================
+3.格式化分区并挂载使用：
+[root@localhost ~]# mkdir /fage_data #创建目录
+[root@localhost ~]# mkfs.ext4 /dev/mapper/fage_crypt            #格式为ext4的文件系统
+[root@localhost ~]# mount /dev/mapper/fage_crypt /fage_data/    #将加密分区挂载到/fage_data目录下
+[root@localhost ~]# cd /fage_data/
+[root@localhost fage_data]# touch fage.file
+[root@localhost fage_data]# ls
+fage.file lost+found
+
+
+
+### ===========================================================================
+4.关闭映射分区：
+[root@localhost ~]# umount /fage_data/                          #卸载分区
+[root@localhost ~]# ls /dev/mapper/fage_crypt
+/dev/mapper/fage_crypt
+[root@localhost ~]# cryptsetup luksClose fage_crypt             #关闭加密分区
+[root@localhost ~]# ls /dev/mapper/                             #再次查看时已经没有fage_crypt设备了
+control VolGroup-lv_root VolGroup-lv_swap
+
+
+
+
+
+
+
+
+
+
+
+###############################################################################
+/*
+Option-backup
+设置开机自动挂载,生成密钥文件，如果想开机时手动输入密码可以不生成
+   
+    1)#创建加密文件，安全起见该文件设为隐藏文件
+[root@localhost ~]# touch /root/.fage_crypt
+
+    2)#为/dev/sdb1分区添加密钥文件.fage_crypt
+[root@localhost ~]# cryptsetup luksAddKey /dev/sdb1 /root/.fage_crypt   
+    Enter any passphrase:                   #输入该分区的加密密码，必须和创建时的一致
+[root@localhost ~]# cat /root/.fage_crypt
+[root@localhost ~]# file /root/.fage_crypt  #验证
+    /root/.fage_crypt: empty
+    
+    3)#设置开机启动, #编辑”加密的块设备”表crypttab添加如下行
+[root@localhost ~]# vim /etc/crypttab                                   
+    fage_crypt /dev/sdb1 /root/.fage_crypt
+###fage_crypt为映射名称，/dev/sdb1是加密设备设备，/root/.fage_crypt为密码文件，
+###如果想开机手动输入密码，密码文件处空着即可
+
+    4)#编辑添加加密分开机启动
+[root@localhost ~]# vim /etc/fstab 
+    /dev/mapper/fage_crypt /fage_crypt ext4 defaults 0 0
+现在加密分区就完成了!!
+*/
+###############################################################################
+
