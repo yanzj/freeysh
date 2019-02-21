@@ -1,0 +1,85 @@
+### ===========================================================================
+特殊符號            代表意義
+[:alnum:]       字母和数字,可以用来替代'a-z, A-Z, 0-9' 
+[:alpha:]       字母，可以用来替代'a-z, A-Z' 
+[:blank:]       代表空白鍵 與[Tab] 按鍵兩者
+[:cntrl:]       代表鍵盤上面的控制按鍵，亦即包括 CR, LF, Tab, Del.. 等等 
+[:digit:]       数字,可以用来替代'0-9' 
+[:graph:]       图形字符 
+[:lower:]       小写字母,可以用来替代'a-z' 
+[:print:]       可打印字符 
+[:punct:]       代表標點符號 (punctuation symbol)，亦即：" ' ? ! ; : # $... 
+[:space:]       空白字符, 包括空白鍵, [Tab], CR 等等
+[:upper:]       大写字母,可以用来替代'A-Z' 
+[:xdigit:]      十六进制字符, 因此包括： 0-9, A-F, a-f 的數字與字元
+
+
+  \\        反斜杠
+  \a        终端鸣响
+  \b        退格
+  \f        换页
+  \n        换行
+  \r        回车
+  \t        水平制表符
+  \v        垂直制表符
+  \0        null字符
+  
+  
+### =========================================================================== 
+AWK
+變數名稱        代表意義
+NF          每一行 ($0) 擁有的欄位總數
+NR          目前 awk 所處理的是『第幾行』資料
+FS          目前的分隔字元，預設是空白鍵  
+
+
+
+
+目錄名稱    目錄意義
+/           根目錄，從根目錄寫起的檔名只會存在一個
+~           使用者的家目錄，不同用戶的家目錄均不相同
+.           一個小數點，代表的是『本目錄』，亦即目前的工作目錄之意
+..          兩個小數點，代表的是『上一層目錄』
+-           一個減號，代表『上一次的工作目錄』之意
+
+
+### =========================================================================== 
+一、IFS 介绍
+
+     Shell 脚本中有个变量叫 IFS(Internal Field Seprator) ，内部域分隔符。
+     完整定义是The shell uses the value stored in IFS, 
+     which is the space, tab, and newline characters by default, 
+     to delimit words for the read and set commands, 
+     when parsing output from command substitution, 
+     and when performing variable substitution.
+
+     Shell 的环境变量分为 set, env 两种，其中 set 变量可以通过 export 工具导入到 env 变量中。
+     其中，set 是显示设置shell变量，仅在本 shell 中有效；env 是显示设置用户环境变量 ，仅在当前会话中有效。
+     换句话说，set 变量里包含了 env 变量，但 set 变量不一定都是 env 变量。
+     这两种变量不同之处在于变量的作用域不同。显然，env 变量的作用域要大些，它可以在 subshell 中使用。
+
+     而 IFS 是一种 set 变量，当 shell 处理"命令替换"和"参数替换"时，shell 根据 IFS 的值，
+     默认是 space, tab, newline 来拆解读入的变量，然后对特殊字符进行处理，最后重新组合赋值给该变量。
+
+二、IFS 简单实例
+
+1、查看变量 IFS 的值。
+
+$ echo $IFS
+
+$ echo "$IFS" | od -b
+0000000 040 011 012 012
+0000004
+
+
+
+
+
+
+
+
+
+
+
+
+
