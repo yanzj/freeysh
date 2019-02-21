@@ -231,9 +231,134 @@ fi
 
 
 
+### ===========================================================================
+
+#!/bin/bash
+
+read -p "Validate Date: " date
+
+pat="^[0-9]{8}$"
+
+if [[ $date =~ $pat ]]; then
+	echo "$date is valid"
+else
+	echo "$date not valid"
+fi
 
 
 
+
+### ===========================================================================
+
+#!/bin/bash
+
+read -p "Enter 2 number to Sum: " num1 num2
+
+sum=$((num1+num2))
+
+read -sp "Enter the secret code: " secret
+
+if [ "$secret" == "password" ]; then
+	echo "Enter"
+else
+	echo "Wrong Password"
+fi
+
+
+
+
+### ===========================================================================
+
+#!/bin/bash
+
+#OIFS="$IFS"
+
+IFS=","
+
+read -p "Enter 2 numbers to add separated by a comma " num1 num2
+
+num1=${num1//[[:blank:]]/}
+num2=${num2//[[:blank:]]/}
+
+sum=$((num1+num2))
+
+echo "$num1 + $num2 = $sum"
+
+#IFS="$OIFS"
+
+
+name="Freeysh"
+echo "${name}'s toy"
+
+samp_string="The dog climbed the tree"
+echo "${samp_string//dog/cat}"
+
+echo "I am ${name:=FreeBSD}"
+
+
+
+### ===========================================================================
+
+#!/bin/bash
+
+read -p "How old are you : " age
+
+case $age in
+	[0-4])
+		echo "To young for school"
+		;;
+
+	5)
+		echo "Go to Kindergarten"
+		;;
+		
+	[6-9]|1[0-8])
+		grade=$((age-5))
+		echo "Go to grade $grade"
+		;;
+
+	*)
+		echo "You are to old for school"
+		;;
+esac
+
+can_vote=0
+#age=18
+
+((age >= 18?(can_vote=1):(can_vote=0)))
+
+echo "Can Vote: $can_vote"
+
+
+
+### ===========================================================================
+
+#!/bin/bash
+
+num=1
+
+while [ $num -le 10 ]; do
+	echo $num
+	num=$((num + 1))
+done
+
+
+num=1
+
+while [ $num -le 20 ]; do
+### if (( ((num % 2)) == 0 )); then
+	if [[ `expr $num % 2` -eq 0 ]]; then
+		num=$((num+1))
+		continue
+	fi
+
+	if ((num >= 15)); then
+		break
+	fi
+
+	echo $num
+	num=$((num+1))
+done
 
 
 
