@@ -1,4 +1,26 @@
 ### ===========================================================================
+Archlinux开启ssh服务命令：
+
+systemctl enable sshd.service  开机启动
+
+systemctl start sshd.service     立即启动
+
+systemctl restart sshd.service   立即重启
+Client usage
+
+To connect to a server, run:
+$ ssh -p port user@server-address
+
+
+/etc/ssh/sshd_config
+
+
+
+
+
+### ===========================================================================
+
+
 wifi-menu
 
 ls /sys/firmware/efi/efivars
@@ -77,7 +99,7 @@ nano -w /etc/hosts
 
 
 
-pancman -S iw wpa_supplicant dialog
+pacman -S iw wpa_supplicant dialog
 
 
 
@@ -85,9 +107,9 @@ pancman -S iw wpa_supplicant dialog
 ### ===========================================================================
 # passwd
 
-pancman -S intel-ucode
+pacman -S intel-ucod
 
-pancman -S grub efibootmgr
+pacman -S grub efibootmgr
 
 grub-install --target=x86_64-efi --efi-directory=/boot/EFI --bootloader-id=grub
 
