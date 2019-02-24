@@ -1,11 +1,17 @@
 ### ===========================================================================
+计划任务
+
 crontab -e
 */1 * * * * cd /home/freeysh/Documents/ysh;/bin/bash freeysh.sh
 
+crontab -e	        #编辑文件所在路径          /var/spool/cron/crontabs/freeysh
+cd /var/log         #crontab日志文件路径      /etc/rsyslog.d/50-default.conf
 
-crontab -e	==/var/spool/cron/crontabs/freeysh
-cd /var/log
-crontab log	==cat /etc/rsyslog.d/50-default.conf
+
+
+### ===========================================================================
+cron是一个linux下的定时执行工具
+
 /etc/init.d/cron start		启动cron服务
 /etc/init.d/cron stop		关闭cron服务
 /etc/init.d/cron restart	重启cron服务

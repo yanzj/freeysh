@@ -1,21 +1,4 @@
 ### ===========================================================================
-sudo apt install sdcc
-
-Supported target architectures
-
-    Intel 8051 and its derivatives.
-    
-    Zilog Z80 and binary compatible derivatives such as the eZ80.
-    Zilog Z180.
-
-    Freescale (Motorola) HC08.
-    Freescale S08.
-    
-    STMicroelectronics STM8.
-
-
-
-### ===========================================================================
 stcflash 下载工具
 
 github.com/laborer/stcflash
@@ -54,5 +37,8 @@ packihx main.ihx
 packihx main.ihx > main.hex
 
 sudo stcflash main.hex --prot /dev/ttyUSB0
+
+
+
 
 

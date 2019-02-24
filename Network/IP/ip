@@ -34,11 +34,8 @@ MAC的定位作用范围有限，需要借助其他的网络层。
 再上面一行，<BROADCAST,,MULTICAST,UP,LOWER_UP>这个叫作net_device flags,网络设备状态标识。
 
 		UP 表示网卡处于启动的状态；
-
 		BROADCAST 表示这个网可以发送广播包;MULTICAST 表示网卡可以发送多播；
-
 		LOWER_UP表示网线插着；
-
 		MTU1500是指最大传输单元 MTU 为 1500，这是以太网的默认值。MTU 是二层 MAC 层的概念。
 		MAC 层有 MAC 的头，以太网规定连 MAC 头带正文合起来，不允许超过 1500 个字节。
 		正文里面有 IP 的头、TCP、HTTP的头。如果放不下，就需要分片来传输。

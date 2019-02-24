@@ -28,27 +28,38 @@ DHCP
 ### ===========================================================================
 DHCP 工作流程
 
-1.发现阶段。
-DHCP客户机以广播方式（因为DHCP服务器的IP地址对于客户机来说是未知的）发送DHCPdiscover发现信息来 寻找DHCP服务器，
+1.寻找阶段(DHCPDISCOVER)  目标端口           源IP                   目标IP
+                          UDP／67          0.0.0.0             255.255.255.255
+即DHCP客户机寻找 DHCP服务器的 阶段
+DHCP客户机以广播方式(因为DHCP服务器的IP地址对于客户机来说是未知的)发送DHCPdiscover信息包 来寻找DHCP服务器，
 即向地址255.255.255.255发送特定的广播信息。
-网络上每一台安装了TCP/IP协议的主机都会接收到这种广播信息，但 只有DHCP服务器才会做出响应。
+网络上每一台安装了TCP/IP协议的主机都会接收到这种广播信息，但只有DHCP服务器才会做出响应。
 
-2.提供阶段。
-在网络中接收到DHCPdiscover发现信息的DHCP服务器都会做出响应，
+
+2.提供阶段(DHCPOFFER)     目标端口             源IP                      目标IP
+                          UDP／68          DHCP服务器的IP             255.255.255.255
+即DHCP服务器的提供IP地址的阶段
+在网络中接收到DHCPdiscover的数据包，DHCP服务器都会做出响应，
 它从尚未出租的IP地址中挑选一个分配给DHCP客户机，
-向DHCP客户机发送一个包含出租的IP地址和其他设置的DHCPoffer提供信息。
+向DHCP客户机发送一个包含出租的IP地址和其他设置的DHCPoffer信息。
 
-3.选择阶段。
-如果有多台DHCP服务器向DHCP客户机发来的DHCPoffer提供信息，
+3.选择阶段(DHCPREQUEST)   目标端口              源IP                      目标IP
+                          UDP／67            0.0.0.0                  255.255.255.255
+即DHCP客户机选择某台DHCP服务器提供的IP地址的阶段
+如果有多台DHCP服务器向DHCP客户机发来DHCPoffer信息，
 则DHCP客户机只接受第一个收到的 DHCPoffer提供信息，然后它就以广播方式回答一个DHCPrequest请求信息，
 该信息中包含向它所选定的DHCP服务器请求IP地址的内容。 之所以要以广播方式回答，是为了通知所有的DHCP服务器，
 他将选择某台DHCP服务器所提供的IP地址。
 
-4.确认阶段。
+
+4.确认阶段(DHCPACK)       目标端口             源IP                      目标IP
+                          UDP／67            0.0.0.0                  255.255.255.255
+即DHCP服务器确认提供IP地址的阶段                    
 当DHCP服务器收到DHCP客户机回答的DHCPrequest请求信息之后，
 它便向DHCP客户机发送一个包含它所提供 的IP地址和其他设置的DHCPack确认信息，
 告诉DHCP客户机可以使用它所提供的IP地址。然后DHCP客户机便将其TCP/IP协议与网卡绑定， 
 另外，除DHCP客户机选中的服务器外，其他的DHCP服务器都将收回曾提供的IP地址。
+
 
 5.重新登录。
 以后DHCP客户机每次重新登录网络时，就不需要再发送DHCPdiscover发现信息了，
@@ -84,10 +95,9 @@ DHCP服务器安装配置
 
 /etc/dhcp3/dhcpd.conf通常包括三部分：parameters、declarations 、option。
 
+
 parameters（参数）：表明如何执行任务，是否要执行任务，或将哪些网络配置选项发送给客户。
-
       参数                            解释
-
       ddns-update-style               配置DHCP-DNS 互动更新模式。
       default-lease-time              指定确省租赁时间的长度，单位是秒。
       max-lease-time                  指定最大租赁时间长度，单位是秒。
@@ -100,7 +110,6 @@ parameters（参数）：表明如何执行任务，是否要执行任务，或�
       
 
 declarations （声明）：用来描述网络布局、提供客户的IP地址等：
-
       声明                            解释
       shared-network                  用来告知是否一些子网络分享相同网络。
       subnet                          描述一个IP地址是否属于该子网。
@@ -111,7 +120,6 @@ declarations （声明）：用来描述网络布局、提供客户的IP地址�
       
 
 option（选项）：用来配置DHCP可选参数，全部用option关键字作为开始：
-
       选项                            解释
       subnet-mask                     为客户端设定子网掩码。
       domain-name                     为客户端指明DNS名字。
@@ -142,7 +150,11 @@ $ cat /etc/dhcp3/dhcpd.conf
           max-lease-time 7200;
         }
 
-
+/* IP地址绑定
+   host         主机名                    #用于定义留IP地址
+   hardware     类型      硬件地址(MAC)   #客户机的硬件信息
+   fixed-address    IP地址                #用于指定DCHP客户机的IP
+*/
         host hostname  {
           hardware ethernet 00:0C:29:44:73:BE;
           fixed-address 192.168.100.128;
