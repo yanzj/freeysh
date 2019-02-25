@@ -1,0 +1,35 @@
+服务器端配置文件：
+vi ／etc／exports
+
+/home/public  1192.168.1.0/24(rw,sync)
+
+
+
+
+
+exprotfs命令 选项
+            －a      按照配置文件挂载／卸载所有目录
+            －r      重新挂载
+            －u      重新卸载
+            －v      显示详细信息
+   
+exports －arv        重新挂载所有目录，不用重启NFS服务
+exports －auv        卸载所有目录
+showmount            查看共享目录
+
+
+
+
+
+NFS客户端使用
+保证rpcbind服务启动
+建立挂载点，并挂载到本地目录
+开机自动挂载
+
+showmount －e 192。168。44。3
+
+
+
+
+
+

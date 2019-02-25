@@ -2,13 +2,13 @@
 
 ### ===========================================================================
 #Port 22
-#AddressFamily any                          # 指定 sshd应当使用哪种地址族,取值范围是："any"(默认)、"inet"(仅IPv4)、"inet6"(仅IPv6)
-#ListenAddress 0.0.0.0                      # 指定 sshd监听的网络地址，默认监听所有地址
+#AddressFamily any                  # 指定 sshd应当使用哪种地址族,取值范围是："any"(默认)、"inet"(仅IPv4)、"inet6"(仅IPv6)
+#ListenAddress 0.0.0.0              # 指定 sshd监听的网络地址，默认监听所有地址
 #ListenAddress ::
 
   
 ### ===========================================================================
-                                            # 主机私钥文件的位置。如果权限不对，sshd可能会拒绝启动
+                                    # 主机私钥文件的位置。如果权限不对，sshd可能会拒绝启动
 #HostKey /etc/ssh/ssh_host_rsa_key 
 #HostKey /etc/ssh/ssh_host_ecdsa_key
 #HostKey /etc/ssh/ssh_host_ed25519_key
