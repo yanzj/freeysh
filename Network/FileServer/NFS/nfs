@@ -9,9 +9,9 @@ NFS（Network File System）即网络文件系统，是FreeBSD支持的文件系
 2、NFS挂载原理
 
              NFS服务器　[NFS共享目录：/home/public]
-             /                                    \
-            /                 　　　　　　　　　　　\
-NFS客户端A /                                        \NFS客户端B
+             /                              \
+            /                 　　　　　　　　　\
+NFS客户端A /                                    \NFS客户端B
 NFS客户端A挂载NFS服务器　　　　　　　　　　　　　　　　NFS客户端A挂载NFS服务器
 共享目录/home/public至本地　　　　　　　　　　　　　　共享目录/home/public至本地
 /home/home/data/mypublic目录内　　　　　　　　　　　　/mnt/nfs目录内
@@ -183,7 +183,6 @@ NFS软件很简单，主要配置文件：/etc/exports，默认这个里面内�
 /tmp/data      192.168.1.0/24(ro)          client-A.ctos.zu(rw,sync)
 
 #[共享目录]   [客户端地址1（权限)]        [客户端地址2（权限)]
-
 以上是一个简单案例配置，每一行最前面是要共享出来的目录，注意是以目录为单位的
 共享目录：存在于我们本机上的目录，我们想共享给网络上的其他主机使用。
 如我要共享/tmp/data目录，那么此选项可以就直接写/tmp/data目录，这个目录可以依照不同的权限共享给不同的主机。
@@ -194,7 +193,7 @@ NFS软件很简单，主要配置文件：/etc/exports，默认这个里面内�
 1 指定的IP             192.168.44.4
 2 指定的网段           192.168.44.0/24       192.168.44.0/255.255.255.0
 3 指定的主机名         www.it168.cn
-4 所人主机              ＊
+4 所人主机              *
 
 
 参数：如读写权限rw,同步更新sync,压缩来访账号all_squash，压缩后的匿名账号anonuid=uid，anongid=gid等等；
