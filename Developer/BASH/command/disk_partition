@@ -1,57 +1,65 @@
-### ===========================================================================
-(1)命令行方式
-# parted /dev/sdb mklabel gpt mkpart 1 ext3 1 5T
+### ===========================================================================parted
+___________________________________________________________
+root #parted -a optimal /dev/sda
 
+GNU Parted 2.3
+Using /dev/sda
+Welcome to GNU Parted! Type 'help' to view a list of commands.
+___________________________________________________________ 
+(parted)mklabel gpt
+___________________________________________________________
+(parted)rm 2
+___________________________________________________________
+(parted)unit mib
+___________________________________________________________
+(parted)mkpart primary 1 3
+(parted)name 1 grub
+(parted)set 1 bios_grub on
+(parted)print
 
-parted有个不提示用户参数选项，就是通过这个选项来实现非交互
-       -s, --script
-              never prompts for user intervention
-              
-parted -s /dev/sdb mklabel msdos
-parted -s /dev/sdb mkpart primary 0 -1
+Model: Virtio Block Device (virtblk)
+Disk /dev/sda: 20480MiB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+  
+Number   Start      End      Size     File system  Name   Flags
+ 1       1.00MiB    3.00MiB  2.00MiB               grub   bios_grub
 
 ___________________________________________________________
-(2)交互式命令方式
-parted /dev/sdb     对/dev/sdb进行分区或管理操作
+(parted)mkpart primary 3 131
+(parted)name 2 boot
+(parted)mkpart primary 131 643
+(parted)name 3 swap
+(parted)mkpart primary 643 -1
+(parted)name 4 rootfs
+___________________________________________________________
+(parted)set 2 boot on
+___________________________________________________________
+(parted)print
 
-(parted) rm 1       rm删除命令(删除之前必须确保分区没有被挂载)
-(parted) rm 2
+Model: Virtio Block Device (virtblk)
+Disk /dev/sda: 20480MiB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+  
+Number   Start      End      Size     File system  Name   Flags
+ 1       1.00MiB    3.00MiB  2.00MiB               grub   bios_grub
+ 2       3.00MiB    131MiB   128MiB                boot   boot
+ 3       131MiB     643MiB   512MiB                swap
+ 4       643MiB     20479MiB 19836MiB              rootfs
 
-(parted) mklabel   gpt	
-                    定义分区表格式
-                    常用的有msdos和gpt分区表格式，
-                    msdos不支持2TB以上容量的磁盘，
-                    所以大于2TB的磁盘选gpt分区表格式
 
-(parted)  mkpart   p1	
-                    创建第一个分区，名称为p1
-                    p1只是第一个分区的名称，
-                    用别的名称也可以，如part1
 
-File system type？  [ext2]?  ext3	
-                    定义分区格式
-                    不支持ext4，想分ext4格式的分区，
-                    可以通过mkfs.ext4格式化成ext4格式
-                    
-Start？  1
-                    定义分区的起始位置
-                    (单位支持K,M,G,T)
-End？   5T
-                    定义分区的结束位置
-                    (单位支持K,M,G,T)
-                    
-(parted) print      查看当前分区情况    
-
-### ===========================================================================
+### ===========================================================================fdisk
 fdisk [必要参数][选择参数]
 
 必要参数：
     -l 列出素所有分区表
     -u 与"-l"搭配使用，显示分区数目
+
 选择参数：
     -s<分区编号> 指定分区
     -v 版本信息
-
 
 菜单操作说明
     m ：显示菜单和帮助信息
@@ -61,13 +69,11 @@ fdisk [必要参数][选择参数]
     n ：新建分区
     p ：显示分区信息
     q ：退出不保存
-    t ：设置分区号
+    t ：设置分区号,更改分区类型
     v ：进行分区检查
     w ：保存修改
     x ：扩展应用，高级功能
-
-
-### ===========================================================================
+### ===========================================================================cfdisk
 cfdisk [-avz]                                \
        [-c <柱面数目>-h <磁头数目>-s <盘区数目>] \
        [-P <r,s,t>][外围设备代号]
@@ -83,4 +89,8 @@ cfdisk [-avz]                                \
     -v 显示版本信息。
     -z 不读取现有的分区，直接当作没有分区的新磁盘使用。
     
+### ===========================================================================gdisk
+___________________________________________________________
+___________________________________________________________
+___________________________________________________________
 
