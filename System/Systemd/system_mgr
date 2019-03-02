@@ -345,10 +345,9 @@ systemctl cat命令可以查看配置文件的内容。
 
 
 
-### ===========================================================================
-5.4 配置文件的区块
-
-[Unit]区块通常是配置文件的第一个区块，用来定义 Unit 的元数据，以及配置与其他 Unit 的关系。它的主要字段如下。
+### ================================================================配置文件的区块
+[Unit]区块通常是配置文件的第一个区块，用来定义 Unit 的元数据，
+以及配置与其他 Unit 的关系。它的主要字段如下。
 
         Description：简短描述
         Documentation：文档地址
@@ -362,9 +361,14 @@ systemctl cat命令可以查看配置文件的内容。
         Assert...：当前 Unit 运行必须满足的条件，否则会报启动失败
 
 [Install]通常是配置文件的最后一个区块，用来定义如何启动，以及是否开机启动。它的主要字段如下。
-
-        WantedBy：它的值是一个或多个 Target，当前 Unit 激活时（enable）符号链接会放入/etc/systemd/system目录下面以 Target 名 + .wants后缀构成的子目录中
-        RequiredBy：它的值是一个或多个 Target，当前 Unit 激活时，符号链接会放入/etc/systemd/system目录下面以 Target 名 + .required后缀构成的子目录中
+        WantedBy：它的值是一个或多个 Target，
+            当前 Unit 激活时（enable）符号链接会放入/etc/systemd/system目录下面以 
+            Target 名 + .wants后缀构成的子目录中
+        
+        RequiredBy：它的值是一个或多个 Target，当前 Unit 激活时，
+            符号链接会放入/etc/systemd/system目录下面以 
+            Target 名 + .required后缀构成的子目录中
+        
         Alias：当前 Unit 可用于启动的别名
         Also：当前 Unit 激活（enable）时，会被同时激活的其他 Unit
 
@@ -384,16 +388,20 @@ systemctl cat命令可以查看配置文件的内容。
         ExecStop：停止当前服务时执行的命令
         ExecStopPost：停止当其服务之后执行的命令
         RestartSec：自动重启当前服务间隔的秒数
-        Restart：定义何种情况 Systemd 会自动重启当前服务，可能的值包括always（总是重启）、on-success、on-failure、on-abnormal、on-abort、on-watchdog
+        Restart：定义何种情况 Systemd 会自动重启当前服务，
+            可能的值包括always（总是重启）、
+            on-success、on-failure、
+            on-abnormal、on-abort、on-watchdog
+            
         TimeoutSec：定义 Systemd 停止当前服务之前等待的秒数
         Environment：指定环境变量
 
-Unit 配置文件的完整字段清单，请参考官方文档。
 
 
 
 
-### ===========================================================================
+
+### ======================================================================Target
 六、Target
 
 启动计算机的时候，需要启动大量的 Unit。如果每一次启动，都要一一写明本次启动需要哪些 Unit，显然非常不方便。Systemd 的解决方案就是 Target。
@@ -421,8 +429,7 @@ Unit 配置文件的完整字段清单，请参考官方文档。
     $ sudo systemctl isolate multi-user.target
 
 Target 与 传统 RunLevel 的对应关系如下。
-
-
+________________________________________________________________________________
     Traditional runlevel      New target name     Symbolically linked to...
 
     Runlevel 0           |    runlevel0.target -> poweroff.target
@@ -446,7 +453,7 @@ Target 与 传统 RunLevel 的对应关系如下。
     
     
     
-### ===========================================================================
+### ===================================================================Journald
 七、日志管理
 
 Systemd 统一管理所有 Unit 的启动日志。带来的好处就是，可以只用journalctl一个命令，查看所有日志（内核日志和应用日志）。
