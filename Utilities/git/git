@@ -66,7 +66,7 @@ git-init-configure:
 完全按照上面的只是操作就可以了。
 
 关联一个远程库命令, 这个是自己远程库
-    git remote add origin git@github.com:uygnoh/stm32f10x.git    
+    git remote add origin git@github.com:uygnoh/freeysh.git    
 	
 关联后,第一次推送master分支的所有内容命令，
     git push -u origin master
