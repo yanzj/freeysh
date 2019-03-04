@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
         exit(1);
     }
     while ((entry = readdir(dir)) != NULL)
-    printf("%d %s\n", entry->d_ino, entry->d_name);
+        printf("%d %s\n", entry->d_ino, entry->d_name);
     closedir(dir);
 }
 
